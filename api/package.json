@@ -1,0 +1,34 @@
+{
+  "name": "typescript-graphql",
+  "scripts": {
+    "start": "ts-node-dev --no-notify --respawn --transpileOnly ./src",
+    "postinstall": "prisma2 generate",
+    "build": "tsc"
+  },
+  "dependencies": {
+    "dotenv": "^8.0.0",
+    "express": "^4.17.1",
+    "google-auth-library": "^5.1.0",
+    "graphql": "^14.4.2",
+    "graphql-shield": "^6.0.4",
+    "graphql-yoga": "1.17.4",
+    "jsonwebtoken": "^8.5.1",
+    "nexus": "0.11.7",
+    "reflect-metadata": "^0.1.13",
+    "sqlite3": "^4.0.9",
+    "type-graphql": "^0.17.4",
+    "typeorm": "^0.2.18"
+  },
+  "devDependencies": {
+    "@prisma/nexus": "^0.0.1",
+    "@types/graphql": "^14.2.3",
+    "@types/jsonwebtoken": "^8.3.2",
+    "@types/node": "10.14.9",
+    "ts-node": "^8.3.0",
+    "ts-node-dev": "1.0.0-pre.40",
+    "typescript": "3.5.2"
+  },
+  "resolutions": {
+    "graphql-middleware": "3.0.1"
+  }
+}

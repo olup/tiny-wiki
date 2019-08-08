@@ -1,0 +1,13 @@
+{
+  "version": "0.1.9",
+  "steps": [
+    {
+      "stepType": "UpdateField",
+      "model": "Role",
+      "name": "locked",
+      "default": {
+        "Boolean": false
+      }
+    }
+  ]
+}
