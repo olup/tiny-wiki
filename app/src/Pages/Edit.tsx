@@ -6,7 +6,7 @@ import gql from "graphql-tag";
 import slugify from "slugify";
 import useRouter from "use-react-router";
 import toast from "Libs/toast";
-import Textarea from "react-textarea-autosize";
+import Textarea from "react-autosize-textarea";
 
 import { savePage, savePageVariables } from "./__generated__/savePage";
 import { loadPage_findOnePage } from "./__generated__/loadPage";
@@ -123,17 +123,14 @@ const StyledTitleInput = styled.input`
   }
 `;
 
-const StyledContentInput = styled.div`
+const StyledContentInput = styled(Textarea)`
   padding: 10px;
   border: 2px dashed transparent;
+  outline: none;
   width: 100%;
-  textarea {
-    width: 100%;
-    outline: none;
-    font: inherit;
-    line-height: 1.8;
-    resize: none;
-  }
+  font: inherit;
+  line-height: 1.8;
+  resize: none;
   &:hover,
   &:focus {
     //background-color: #f9f9f9;
@@ -249,13 +246,11 @@ const Editor = ({
             onChange={e => setTitle(e.target.value)}
           />
         </H1>
-        <StyledContentInput>
-          <Textarea
-            placeholder="Write markdown ..."
-            value={content || ""}
-            onChange={e => setContent(e.target.value)}
-          />
-        </StyledContentInput>
+        <StyledContentInput
+          placeholder="Write markdown ..."
+          value={content || ""}
+          onChange={(e: any) => setContent(e.target.value)}
+        />
       </div>
       {/* <Button
         icon="person"
