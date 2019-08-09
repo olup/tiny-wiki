@@ -1,11 +1,11 @@
-import React from "react";
-import { Button } from "@blueprintjs/core";
-import styled from "styled-components";
-
-import { GoogleLogin } from "react-google-login";
-import gql from "graphql-tag";
 import { useApolloClient } from "@apollo/react-hooks";
-
+import { Button } from "@blueprintjs/core";
+import gql from "graphql-tag";
+import decodeToken from "jwt-decode";
+import simpleStore from "Libs/simpleStore";
+import React from "react";
+import { GoogleLogin } from "react-google-login";
+import styled from "styled-components";
 import useRouter from "use-react-router";
 
 const Page = styled.div`
@@ -32,6 +32,13 @@ export default () => {
     });
     const jwt = result.data.loginWithGoogleToken;
     localStorage.setItem("access_token", jwt);
+
+    const userData: any = decodeToken(
+      localStorage.getItem("access_token") || ""
+    );
+    simpleStore.user = userData.user;
+    simpleStore.roles = userData.roles;
+
     history.push("/");
   };
   return (

@@ -15,30 +15,53 @@ const rules = {
     const { id } = parent;
     const canView = await photon.pages.findOne({ where: { id: id } }).canView();
     const publicRole = await getPublicRole();
-    if (roleInRoles(publicRole, canView)) return true;
+    if (roleInRoles(publicRole.id, canView.map(r => r.id))) return true;
 
     const userRoles = ctx.roles;
-    return haveMatchingRole(userRoles, canView);
+    return haveMatchingRole(userRoles, canView.map(r => r.id));
   }),
   canEditPage: rule()(async (parent, args, ctx, info) => {
-    const { id } = parent;
-    const canEdit = await photon.pages.findOne({ where: { id: id } }).canEdit();
+    // console.log(args);
+    const slug = args.where.slug;
+    const id = args.where.id;
+    const page = await photon.pages
+      .findOne({
+        where: { slug, id },
+        include: { canEdit: true }
+      })
+      .catch(e => console.log(e));
+    console.log(page);
+    //** Creation */
+    if (!page) return true;
+
     const publicRole = await getPublicRole();
-    if (roleInRoles(publicRole, canEdit)) return true;
+    if (roleInRoles(publicRole.id, page.canEdit.map(r => r.id))) return true;
 
     const userRoles = ctx.roles;
-    return haveMatchingRole(userRoles, canEdit);
+    return haveMatchingRole(userRoles, page.canEdit.map(r => r.id));
   }),
   isAdmin: rule()(async (parent, args, ctx, info) => {
     const userRoles = ctx.roles;
     const adminRole = await getAdminRole();
-    if (roleInRoles(adminRole, userRoles)) return true;
+    if (roleInRoles(adminRole.id, userRoles)) return true;
     return false;
   }),
   roleIsEditable: rule()(async (parent, args, ctx, info) => {
     const id = args.where.id;
     const role = await photon.roles.findOne({ where: { id } });
     return !role.locked;
+  }),
+  isPageOwner: rule()(async (parent, args, ctx, info) => {
+    const id = args.where.id;
+    const slug = args.where.slug;
+
+    const page = await photon.pages.findOne({
+      where: { id, slug },
+      include: { draftOwner: true }
+    });
+    if (!page) return true;
+    if (page.draftOwner && page.draftOwner.id == ctx.user.id) return true;
+    return false;
   })
 };
 
@@ -58,13 +81,13 @@ export default shield({
 
     upsertOnePage: and(
       rules.isAuthenticatedUser,
-      or(rules.isAdmin, rules.canEditPage)
+      or(rules.isAdmin, rules.canEditPage, rules.isPageOwner)
     ),
     deleteOnePage: and(
       rules.isAuthenticatedUser,
-      or(rules.isAdmin, rules.canEditPage)
+      or(rules.isAdmin, rules.canEditPage, rules.isPageOwner)
     )
-  },
+  }
 
-  Page: and(rules.isAuthenticatedUser, or(rules.isAdmin, rules.canViewPage))
+  // Page: and(rules.isAuthenticatedUser, or(rules.isAdmin, rules.canViewPage))
 });

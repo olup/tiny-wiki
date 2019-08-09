@@ -694,10 +694,10 @@ export interface NexusGenFieldTypes {
     title: string; // String!
   }
   Query: { // field return type
-    findManyPage: NexusGenRootTypes['Page'][] | null; // [Page!]
     findManyRole: NexusGenRootTypes['Role'][] | null; // [Role!]
     findManyUser: NexusGenRootTypes['User'][] | null; // [User!]
     findOnePage: NexusGenRootTypes['Page'] | null; // Page
+    listPages: NexusGenRootTypes['Page'][]; // [Page!]!
   }
   Role: { // field return type
     id: string; // ID!
@@ -758,13 +758,6 @@ export interface NexusGenArgTypes {
     }
   }
   Query: {
-    findManyPage: { // args
-      after?: string | null; // String
-      before?: string | null; // String
-      first?: number | null; // Int
-      last?: number | null; // Int
-      skip?: number | null; // Int
-    }
     findManyRole: { // args
       after?: string | null; // String
       before?: string | null; // String

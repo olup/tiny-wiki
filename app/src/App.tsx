@@ -13,6 +13,8 @@ import {
 } from "react-router-dom";
 import Home from "Pages/Home";
 import { createGlobalStyle } from "styled-components";
+import decodeToken from "jwt-decode";
+import simpleStore from "Libs/simpleStore";
 
 const GlobalStyle = createGlobalStyle`
   a:hover {
@@ -21,6 +23,13 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 const App: React.FC = () => {
+  if (localStorage.getItem("access_token")) {
+    const userData: any = decodeToken(
+      localStorage.getItem("access_token") || ""
+    );
+    simpleStore.user = userData.user;
+    simpleStore.roles = userData.roles;
+  }
   return (
     <Router>
       <GlobalStyle />
@@ -28,6 +37,14 @@ const App: React.FC = () => {
         <div className="App">
           <Switch>
             <Route path="/login" exact component={Login} />
+            <Route
+              path="/logout"
+              exact
+              render={() => {
+                localStorage.removeItem("access_token");
+                return <Redirect to="/login" />;
+              }}
+            />
             <Route path="/" component={Home} />
           </Switch>
         </div>

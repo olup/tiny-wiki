@@ -5,6 +5,7 @@ import { NavLink, Link } from "react-router-dom";
 import { Button } from "@blueprintjs/core";
 import { getPagesSideBar } from "./__generated__/getPagesSideBar";
 import { useQuery } from "@apollo/react-hooks";
+import simpleStore from "Libs/simpleStore";
 
 const SideBar = styled.div`
   width: 350px;
@@ -35,7 +36,7 @@ const NavItem = styled(NavLink)`
 
 const GET_PAGES = gql`
   query getPagesSideBar {
-    findManyPage {
+    listPages {
       title
       slug
     }
@@ -44,7 +45,7 @@ const GET_PAGES = gql`
 
 export default () => {
   const { data } = useQuery<getPagesSideBar>(GET_PAGES, { variables: {} });
-  const pages = (data && data.findManyPage) || [];
+  const pages = (data && data.listPages) || [];
   return (
     <SideBar>
       <NavHeader>
@@ -65,6 +66,11 @@ export default () => {
           <Link to={`/settings`}>
             <Button minimal icon="cog">
               Settings
+            </Button>
+          </Link>
+          <Link to={`/logout`}>
+            <Button minimal icon="refresh">
+              Log out
             </Button>
           </Link>
         </NavSection>

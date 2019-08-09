@@ -23,11 +23,10 @@ export const getPublicRole = async () => {
 type InputRole = Partial<Role> & {
   id: Role["id"];
 };
-export const roleInRoles = (role: InputRole, roles: InputRole[]) => {
-  return roles.map(r => r.id).includes(role.id);
+export const roleInRoles = (role: string, roles: string[]) => {
+  return roles.includes(role);
 };
 
-export const haveMatchingRole = (rolesA: InputRole[], rolesB: InputRole[]) => {
-  const roleBIds = rolesB.map(r => r.id);
-  return !!rolesA.find(role => roleBIds.includes(role.id));
+export const haveMatchingRole = (rolesA: string[], rolesB: string[]) => {
+  return !!rolesA.find(role => rolesB.includes(role));
 };

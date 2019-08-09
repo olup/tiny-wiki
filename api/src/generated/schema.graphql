@@ -368,10 +368,10 @@ input PageWhereUniqueInput {
 }
 
 type Query {
-  findManyPage(after: String, before: String, first: Int, last: Int, skip: Int): [Page!]
   findManyRole(after: String, before: String, first: Int, last: Int, skip: Int): [Role!]
   findManyUser(after: String, before: String, first: Int, last: Int, skip: Int): [User!]
   findOnePage(where: PageWhereUniqueInput!): Page
+  listPages: [Page!]!
 }
 
 type Role {

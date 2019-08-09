@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { CreatePage, EditPage } from "./Edit";
+import EditPage from "./Edit";
 import { Route, Switch, Redirect } from "react-router-dom";
 import Page from "./Page";
 import Settings from "./Settings";
@@ -24,7 +24,7 @@ export default () => {
       <SideBar />
       <Content>
         <Switch>
-          <Route path="/page/create" exact component={CreatePage} />
+          <Route path="/page/create" exact component={EditPage} />
           <Route path="/page/:slug" exact component={Page} />
           <Route path="/page/:slug/edit" exact component={EditPage} />
           <Route path="/settings" exact component={Settings} />

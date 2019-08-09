@@ -1,65 +1,38 @@
-import { idArg, queryType, stringArg } from 'nexus'
-import { getUserId } from '../utils'
+import { getAdminRole, getPublicRole } from "../tools";
+import photon from "../libs/photon";
+import { objectType } from "@prisma/nexus";
 
-export const Query = queryType({
+export const Query = objectType({
+  name: "Query",
   definition(t) {
-    t.field('me', {
-      type: 'User',
-      resolve: (parent, args, ctx) => {
-        const userId = getUserId(ctx)
-        return ctx.photon.users.findOne({
-          where: {
-            id: userId,
-          },
-        })
-      },
-    })
+    t.crud.findOnePage();
+    t.crud.findManyUser();
+    t.crud.findManyRole();
 
-    t.list.field('feed', {
-      type: 'Post',
-      resolve: (parent, args, ctx) => {
-        return ctx.photon.posts.findMany({
-          where: { published: true },
-        })
-      },
-    })
+    t.list.field("listPages", {
+      type: "Page",
+      resolve: async (a, b, ctx) => {
+        const roles = ctx.roles;
+        const user = ctx.user;
 
-    t.list.field('filterPosts', {
-      type: 'Post',
-      args: {
-        searchString: stringArg({ nullable: true }),
-      },
-      resolve: (parent, { searchString }, ctx) => {
-        return ctx.photon.posts.findMany({
-          where: {
-            OR: [
-              {
-                title: {
-                  contains: searchString,
-                },
-              },
-              {
-                content: {
-                  contains: searchString,
-                },
-              },
-            ],
-          },
-        })
-      },
-    })
+        const adminRole = await getAdminRole();
+        const publicRole = await getPublicRole();
 
-    t.field('post', {
-      type: 'Post',
-      nullable: true,
-      args: { id: idArg() },
-      resolve: (parent, { id }, ctx) => {
-        return ctx.photon.posts.findOne({
-          where: {
-            id,
-          },
-        })
-      },
-    })
-  },
-})
+        const pages = await photon.pages.findMany({
+          include: { canView: true, draftOwner: true }
+        });
+
+        return pages.filter(p => {
+          if (roles.includes(adminRole.id)) return true;
+
+          if (p.draftOwner && p.draftOwner.id === user.id) return true;
+
+          return !!p.canView.find(r => {
+            if (r.id === publicRole.id) return true;
+            return roles.includes(r.id);
+          });
+        });
+      }
+    });
+  }
+});

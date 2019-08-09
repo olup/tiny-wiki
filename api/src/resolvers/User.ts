@@ -1,11 +1,10 @@
-import { objectType } from '@prisma/nexus'
+import { objectType } from "@prisma/nexus";
 
 export const User = objectType({
-  name: 'User',
+  name: "User",
   definition(t) {
-    t.model.id()
-    t.model.name()
-    t.model.email()
-    t.model.posts({ pagination: false })
-  },
-})
+    t.model.id();
+    t.model.email();
+    t.model.roles();
+  }
+});

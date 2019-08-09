@@ -6,12 +6,12 @@
 // GraphQL query operation: getPagesSideBar
 // ====================================================
 
-export interface getPagesSideBar_findManyPage {
+export interface getPagesSideBar_listPages {
   __typename: "Page";
   title: string;
   slug: string;
 }
 
 export interface getPagesSideBar {
-  findManyPage: getPagesSideBar_findManyPage[] | null;
+  listPages: getPagesSideBar_listPages[];
 }
