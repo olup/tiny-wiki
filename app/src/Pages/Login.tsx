@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 import { GoogleLogin } from "react-google-login";
 import gql from "graphql-tag";
-import { useApolloClient } from "react-apollo-hooks";
+import { useApolloClient } from "@apollo/react-hooks";
 
 import useRouter from "use-react-router";
 

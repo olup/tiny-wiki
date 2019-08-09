@@ -69,7 +69,6 @@ export default () => {
           </Link>
         </NavSection>
       </div>
-      );
     </SideBar>
   );
 };

@@ -68,8 +68,13 @@ const Mutation = objectType({
       resolve: async (_, { token }) => {
         const email = await verifyGoogleLogin(token);
         const user = await photon.users.findOne({ where: { email } });
+        const roles = await photon.users.findOne({ where: { email } }).roles();
         if (!user) throw new Error();
-        if (user) return sign({ user }, process.env.JWT_SECRET);
+        if (user)
+          return sign(
+            { user, roles: roles.map(r => r.id) },
+            process.env.JWT_SECRET
+          );
       }
     });
   }
@@ -93,15 +98,15 @@ async function main() {
     schema,
     middlewares: [permissions],
     context: ({ request }) => {
-      let user = null;
+      let datas = null;
       try {
         const authHeader = request.get("Authorization");
         let token = "";
         if (authHeader) token = authHeader.split(" ")[1];
-        user = getUserFromJwt(token);
+        datas = getUserFromJwt(token);
       } catch (e) {}
       return {
-        ...(user && { user }),
+        ...(datas && datas instanceof Object && { ...datas }),
         photon
       };
     }

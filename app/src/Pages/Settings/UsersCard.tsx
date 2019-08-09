@@ -11,7 +11,7 @@ import {
   EditableText,
   MenuItem
 } from "@blueprintjs/core";
-// import { MultiSelect } from "@blueprintjs/select";
+import { MultiSelect } from "@blueprintjs/select";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 import { addUser, addUserVariables } from "./__generated__/addUser";
 import { deleteUser, deleteUserVariables } from "./__generated__/deleteUser";
@@ -24,7 +24,6 @@ const UPDATE_USER = gql`
       id
       roles {
         id
-        slug
       }
     }
   }
@@ -106,7 +105,10 @@ const UserLine = ({ user, onDelete, roles }: UserLine) => {
   const addRole = (role: getRoles_roles) => {
     delete role.__typename;
     updateUser({
-      variables: { id: user.id, userData: { roles: { connect: [role] } } }
+      variables: {
+        id: user.id,
+        userData: { roles: { connect: [{ id: role.id }] } }
+      }
     });
   };
   const deleteRole = (role: getRoles_roles | string | null) => {
@@ -118,13 +120,16 @@ const UserLine = ({ user, onDelete, roles }: UserLine) => {
     if (!role) return;
     delete role.__typename;
     updateUser({
-      variables: { id: user.id, userData: { roles: { disconnect: [role] } } }
+      variables: {
+        id: user.id,
+        userData: { roles: { disconnect: [{ id: role.id }] } }
+      }
     });
   };
   return (
     <Line>
       <Email>{email}</Email>
-      {/* <div style={{ width: 300 }}>
+      <div style={{ width: 300 }}>
         <MultiSelect<getRoles_roles>
           onItemSelect={role => addRole(role)}
           selectedItems={userRoles ? userRoles : []}
@@ -138,7 +143,7 @@ const UserLine = ({ user, onDelete, roles }: UserLine) => {
           items={roles}
           tagInputProps={{ onRemove: role => deleteRole(role) }}
         />
-      </div> */}
+      </div>
       <Button icon="trash" intent="danger" onClick={onDelete}>
         Delete
       </Button>

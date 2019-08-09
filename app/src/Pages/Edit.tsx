@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { H1, Button, Tag } from "@blueprintjs/core";
+import { H1, Button, Tag, Collapse, Card, H3, H5 } from "@blueprintjs/core";
 import { useApolloClient, useQuery, useMutation } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 import slugify from "slugify";
@@ -11,7 +11,10 @@ import Textarea from "react-autosize-textarea";
 import { savePage, savePageVariables } from "./__generated__/savePage";
 import { loadPage_findOnePage } from "./__generated__/loadPage";
 import { Link } from "react-router-dom";
-import { findManyRole_findManyRole } from "./__generated__/findManyRole";
+import {
+  findManyRole_findManyRole,
+  findManyRole
+} from "./__generated__/findManyRole";
 import {
   loadPageContentContent,
   loadPageContentContentVariables
@@ -176,11 +179,11 @@ const Editor = ({
   const [title, setTitle] = useState(page.title || "");
   const [content, setContent] = useState(page.content || "");
 
-  // const [showPermissions, setShowPermissions] = useState(false);
-  // const [canView, setCanView] = useState(page.canEdit || []);
-  // const [canEdit, setCanEdit] = useState(page.canView || []);
-  // const { data } = useQuery<findManyRole>(GET_ROLES);
-  // const roles = (data && data.findManyRole) || [];
+  const [showPermissions, setShowPermissions] = useState(false);
+  const [canView, setCanView] = useState(page.canView || []);
+  const [canEdit, setCanEdit] = useState(page.canEdit || []);
+  const { data } = useQuery<findManyRole>(GET_ROLES);
+  const roles = (data && data.findManyRole) || [];
 
   const client = useApolloClient();
   const { refetch: updatePages } = useQuery(GET_PAGES, { skip: true });
@@ -197,6 +200,7 @@ const Editor = ({
   };
 
   const onSave = async () => {
+    console.log(canEdit, canView);
     await client.mutate<savePage, savePageVariables>({
       mutation: SAVE_PAGE,
       variables: {
@@ -205,17 +209,15 @@ const Editor = ({
           title,
           content,
           slug,
-          published: true
-          // canView: { connect: canView.map(r => ({ id: r.id })) },
-          // canEdit: { connect: canEdit.map(r => ({ id: r.id })) }
+          published: true,
+          canView: { connect: canView.map(r => ({ id: r.id })) },
+          canEdit: { connect: canEdit.map(r => ({ id: r.id })) }
         },
         dataUpdate: {
           title,
           content,
-          slug,
-          published: true
-          // canView: { set: canView.map(r => ({ id: r.id })) },
-          // canEdit: { set: canEdit.map(r => ({ id: r.id })) }
+          canView: { set: canView.map(r => ({ id: r.id })) },
+          canEdit: { set: canEdit.map(r => ({ id: r.id })) }
         }
       }
     });
@@ -252,7 +254,7 @@ const Editor = ({
           onChange={(e: any) => setContent(e.target.value)}
         />
       </div>
-      {/* <Button
+      <Button
         icon="person"
         style={{ marginTop: 10 }}
         onClick={() => setShowPermissions(!showPermissions)}
@@ -264,18 +266,15 @@ const Editor = ({
           <H3>Permissions</H3>
           <H5>Can View</H5>
           <p>
-            {roles.map(role => {
-              const isSelectd = roleIn(role, canView);
-              return (
-                <StyledTag
-                  interactive
-                  minimal={!isSelectd}
-                  onClick={() => setCanView(toggleRole(role, canView))}
-                >
-                  {role.slug.toUpperCase()}
-                </StyledTag>
-              );
-            })}
+            {roles.map(role => (
+              <StyledTag
+                interactive
+                minimal={!roleIn(role, canView)}
+                onClick={() => setCanView(toggleRole(role, canView))}
+              >
+                {role.slug.toUpperCase()}
+              </StyledTag>
+            ))}
           </p>
           <H5>Can Edit</H5>
           <p>
@@ -290,7 +289,7 @@ const Editor = ({
             ))}
           </p>
         </Card>
-      </Collapse> */}
+      </Collapse>
     </div>
   );
 };

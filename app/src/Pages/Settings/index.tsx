@@ -6,7 +6,7 @@ export default () => {
   return (
     <div>
       <UsersCard />
-      {/* <RoleCard /> */}
+      <RoleCard />
     </div>
   );
 };

@@ -37,8 +37,9 @@ model Page {
   content    String?
   published  Boolean
   draftOwner User?   @relation(name: "draftOwner")
-  canView    Role[]  @relation(name: "users_can_view_pages")
-  canEdit    Role[]  @relation(name: "users_can_edit_pages")
+
+  canView Role[] @relation(name: "users_can_view_pages")
+  canEdit Role[] @relation(name: "users_can_edit_pages")
 
   parent   Page[]
   children Page[]
