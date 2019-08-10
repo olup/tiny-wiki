@@ -47,11 +47,9 @@ export const LOAD_PAGE = gql`
       content
       canView {
         slug
-        id
       }
       canEdit {
         slug
-        id
       }
     }
   }
@@ -60,7 +58,6 @@ export const LOAD_PAGE = gql`
 export const GET_ROLES = gql`
   query findManyRole {
     findManyRole {
-      id
       slug
     }
   }

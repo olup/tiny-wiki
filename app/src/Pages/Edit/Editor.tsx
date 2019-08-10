@@ -11,9 +11,10 @@ const StyledTitleInput = styled.input`
   outline: none;
   font: inherit;
   width: 100%;
+  font-size: 50px;
   &:hover,
   &:focus {
-    border-color: #f1f1f1;
+    border-color: #ddd;
   }
 `;
 
@@ -25,11 +26,16 @@ const StyledContentInput = styled(Textarea)`
   font: inherit;
   line-height: 1.8;
   resize: none;
+  overflow: hidden;
   &:hover,
   &:focus {
     //background-color: #f9f9f9;
-    border-color: #f1f1f1;
+    border-color: #ddd;
   }
+`;
+
+const StyledEditor = styled.div`
+  margin: 10px -10px;
 `;
 
 export default () => {
@@ -37,7 +43,7 @@ export default () => {
   const updatePage = PageState.useStoreActions(actions => actions.updatePage);
   if (!page) return null;
   return (
-    <div>
+    <StyledEditor>
       <H1>
         <StyledTitleInput
           placeholder="Title"
@@ -50,6 +56,6 @@ export default () => {
         value={page.content || ""}
         onChange={(e: any) => updatePage({ content: e.target.value })}
       />
-    </div>
+    </StyledEditor>
   );
 };

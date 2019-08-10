@@ -8,7 +8,6 @@
 
 export interface getRoles_roles {
   __typename: "Role";
-  id: string;
   slug: string;
 }
 

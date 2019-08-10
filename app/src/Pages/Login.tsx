@@ -2,11 +2,12 @@ import { useApolloClient } from "@apollo/react-hooks";
 import { Button } from "@blueprintjs/core";
 import gql from "graphql-tag";
 import decodeToken from "jwt-decode";
-import simpleStore from "Libs/simpleStore";
+import { useSimpleStore } from "Libs/simpleStore";
 import React from "react";
 import { GoogleLogin } from "react-google-login";
 import styled from "styled-components";
 import useRouter from "use-react-router";
+import { FaGooglePlusG, FaGoogle } from "react-icons/fa";
 
 const Page = styled.div`
   width: 100vw;
@@ -25,6 +26,7 @@ const LOGIN_WITH_GOOGLE_ID = gql`
 export default () => {
   const client = useApolloClient();
   const { history } = useRouter();
+  const simpleStore = useSimpleStore();
   const onLogin = async (token: string) => {
     const result = await client.mutate({
       mutation: LOGIN_WITH_GOOGLE_ID,
@@ -46,7 +48,11 @@ export default () => {
       <GoogleLogin
         clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID || ""}
         render={props => (
-          <Button large icon="key" onClick={() => props && props.onClick()}>
+          <Button
+            large
+            icon={<FaGoogle />}
+            onClick={() => props && props.onClick()}
+          >
             Login with Google
           </Button>
         )}

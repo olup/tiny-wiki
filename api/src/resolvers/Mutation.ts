@@ -24,7 +24,7 @@ export const Mutation = objectType({
         if (!user) throw new Error();
         if (user)
           return sign(
-            { user, roles: roles.map(r => r.id) },
+            { user, roles: roles.map(r => r.slug) },
             process.env.JWT_SECRET
           );
       }

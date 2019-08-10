@@ -1,14 +1,7 @@
 import React, { useState } from "react";
 import gql from "graphql-tag";
 import styled from "styled-components";
-import {
-  Card,
-  Elevation,
-  H1,
-  Button,
-  EditableText,
-  MenuItem
-} from "@blueprintjs/core";
+import { Button, EditableText, MenuItem, H3 } from "@blueprintjs/core";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 import { getRoles_roles, getRoles } from "./__generated__/getRoles";
 import { addRoleVariables, addRole } from "./__generated__/addRole";
@@ -17,7 +10,6 @@ import { deleteRole, deleteRoleVariables } from "./__generated__/deleteRole";
 const GET_ROLES = gql`
   query getRoles {
     roles: findManyRole {
-      id
       slug
     }
   }
@@ -26,16 +18,15 @@ const GET_ROLES = gql`
 const ADD_ROLE = gql`
   mutation addRole($role: RoleCreateInput!) {
     role: createOneRole(data: $role) {
-      id
       slug
     }
   }
 `;
 
 const DELETE_ROLE = gql`
-  mutation deleteRole($roleId: ID!) {
-    role: deleteOneRole(where: { id: $roleId }) {
-      id
+  mutation deleteRole($roleSlug: ID!) {
+    role: deleteOneRole(where: { slug: $roleSlug }) {
+      slug
     }
   }
 `;
@@ -88,15 +79,15 @@ export default () => {
 
   const roles = (data && data.roles) || [];
   return (
-    <Card elevation={Elevation.TWO} style={{ marginTop: 20 }}>
-      <H1>Roles</H1>
+    <div>
+      <H3>Roles</H3>
       <Body>
         {roles.map(role => (
           <RoleLine
-            key={role.id}
+            key={role.slug}
             role={role}
             onDelete={() =>
-              deleteUser({ variables: { roleId: role.id } }).then(() =>
+              deleteUser({ variables: { roleSlug: role.slug } }).then(() =>
                 refetch()
               )
             }
@@ -124,6 +115,6 @@ export default () => {
           </Button>
         </Line>
       </Body>
-    </Card>
+    </div>
   );
 };

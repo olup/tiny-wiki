@@ -30,7 +30,6 @@ export interface NexusGenInputs {
   MutationUpdateOneUserWhereInput: { // input type
     AND?: NexusGenInputs['MutationUpdateOneUserWhereInput'][] | null; // [MutationUpdateOneUserWhereInput!]
     editPages?: NexusGenInputs['MutationUpdateOneUserFilter'] | null; // MutationUpdateOneUserFilter
-    id?: NexusGenInputs['StringFilter'] | null; // StringFilter
     locked?: NexusGenInputs['BooleanFilter'] | null; // BooleanFilter
     NOT?: NexusGenInputs['MutationUpdateOneUserWhereInput'][] | null; // [MutationUpdateOneUserWhereInput!]
     OR?: NexusGenInputs['MutationUpdateOneUserWhereInput'][] | null; // [MutationUpdateOneUserWhereInput!]
@@ -46,7 +45,6 @@ export interface NexusGenInputs {
   MutationUpsertOnePageWhereInput: { // input type
     AND?: NexusGenInputs['MutationUpsertOnePageWhereInput'][] | null; // [MutationUpsertOnePageWhereInput!]
     editPages?: NexusGenInputs['MutationUpsertOnePageFilter'] | null; // MutationUpsertOnePageFilter
-    id?: NexusGenInputs['StringFilter'] | null; // StringFilter
     locked?: NexusGenInputs['BooleanFilter'] | null; // BooleanFilter
     NOT?: NexusGenInputs['MutationUpsertOnePageWhereInput'][] | null; // [MutationUpsertOnePageWhereInput!]
     OR?: NexusGenInputs['MutationUpsertOnePageWhereInput'][] | null; // [MutationUpsertOnePageWhereInput!]
@@ -325,9 +323,8 @@ export interface NexusGenInputs {
   }
   RoleCreateInput: { // input type
     editPages?: NexusGenInputs['PageCreateManyWithoutEditPagesInput'] | null; // PageCreateManyWithoutEditPagesInput
-    id?: string | null; // ID
     locked?: boolean | null; // Boolean
-    slug: string; // String!
+    slug?: string | null; // ID
     users?: NexusGenInputs['UserCreateManyWithoutUsersInput'] | null; // UserCreateManyWithoutUsersInput
     viewPages?: NexusGenInputs['PageCreateManyWithoutViewPagesInput'] | null; // PageCreateManyWithoutViewPagesInput
   }
@@ -344,30 +341,26 @@ export interface NexusGenInputs {
     create?: NexusGenInputs['RoleCreateWithoutUsersInput'][] | null; // [RoleCreateWithoutUsersInput!]
   }
   RoleCreateWithoutEditPagesInput: { // input type
-    id?: string | null; // ID
     locked?: boolean | null; // Boolean
-    slug: string; // String!
+    slug?: string | null; // ID
     users?: NexusGenInputs['UserCreateManyWithoutUsersInput'] | null; // UserCreateManyWithoutUsersInput
     viewPages?: NexusGenInputs['PageCreateManyWithoutViewPagesInput'] | null; // PageCreateManyWithoutViewPagesInput
   }
   RoleCreateWithoutUsersInput: { // input type
     editPages?: NexusGenInputs['PageCreateManyWithoutEditPagesInput'] | null; // PageCreateManyWithoutEditPagesInput
-    id?: string | null; // ID
     locked?: boolean | null; // Boolean
-    slug: string; // String!
+    slug?: string | null; // ID
     viewPages?: NexusGenInputs['PageCreateManyWithoutViewPagesInput'] | null; // PageCreateManyWithoutViewPagesInput
   }
   RoleCreateWithoutViewPagesInput: { // input type
     editPages?: NexusGenInputs['PageCreateManyWithoutEditPagesInput'] | null; // PageCreateManyWithoutEditPagesInput
-    id?: string | null; // ID
     locked?: boolean | null; // Boolean
-    slug: string; // String!
+    slug?: string | null; // ID
     users?: NexusGenInputs['UserCreateManyWithoutUsersInput'] | null; // UserCreateManyWithoutUsersInput
   }
   RoleUpdateManyDataInput: { // input type
-    id?: string | null; // ID
     locked?: boolean | null; // Boolean
-    slug?: string | null; // String
+    slug?: string | null; // ID
   }
   RoleUpdateManyWithWhereNestedInput: { // input type
     data: NexusGenInputs['RoleUpdateManyDataInput']; // RoleUpdateManyDataInput!
@@ -419,24 +412,21 @@ export interface NexusGenInputs {
     where: NexusGenInputs['RoleWhereUniqueInput']; // RoleWhereUniqueInput!
   }
   RoleUpdateWithoutEditPagesDataInput: { // input type
-    id?: string | null; // ID
     locked?: boolean | null; // Boolean
-    slug?: string | null; // String
+    slug?: string | null; // ID
     users?: NexusGenInputs['UserUpdateManyWithoutRolesInput'] | null; // UserUpdateManyWithoutRolesInput
     viewPages?: NexusGenInputs['PageUpdateManyWithoutCanViewInput'] | null; // PageUpdateManyWithoutCanViewInput
   }
   RoleUpdateWithoutUsersDataInput: { // input type
     editPages?: NexusGenInputs['PageUpdateManyWithoutCanEditInput'] | null; // PageUpdateManyWithoutCanEditInput
-    id?: string | null; // ID
     locked?: boolean | null; // Boolean
-    slug?: string | null; // String
+    slug?: string | null; // ID
     viewPages?: NexusGenInputs['PageUpdateManyWithoutCanViewInput'] | null; // PageUpdateManyWithoutCanViewInput
   }
   RoleUpdateWithoutViewPagesDataInput: { // input type
     editPages?: NexusGenInputs['PageUpdateManyWithoutCanEditInput'] | null; // PageUpdateManyWithoutCanEditInput
-    id?: string | null; // ID
     locked?: boolean | null; // Boolean
-    slug?: string | null; // String
+    slug?: string | null; // ID
     users?: NexusGenInputs['UserUpdateManyWithoutRolesInput'] | null; // UserUpdateManyWithoutRolesInput
   }
   RoleUpsertWithWhereUniqueWithoutEditPagesInput: { // input type
@@ -455,8 +445,7 @@ export interface NexusGenInputs {
     where: NexusGenInputs['RoleWhereUniqueInput']; // RoleWhereUniqueInput!
   }
   RoleWhereUniqueInput: { // input type
-    id?: string | null; // ID
-    slug?: string | null; // String
+    slug?: string | null; // ID
   }
   StringFilter: { // input type
     contains?: string | null; // String
@@ -577,9 +566,8 @@ export interface NexusGenRootTypes {
   }
   Query: {};
   Role: { // root type
-    id: string; // ID!
     locked: boolean; // Boolean!
-    slug: string; // String!
+    slug: string; // ID!
   }
   User: { // root type
     email: string; // String!
@@ -689,6 +677,7 @@ export interface NexusGenFieldTypes {
     canEdit: NexusGenRootTypes['Role'][] | null; // [Role!]
     canView: NexusGenRootTypes['Role'][] | null; // [Role!]
     content: string | null; // String
+    draftOwner: NexusGenRootTypes['User'] | null; // User
     id: string; // ID!
     slug: string; // String!
     title: string; // String!
@@ -700,9 +689,8 @@ export interface NexusGenFieldTypes {
     listPages: NexusGenRootTypes['Page'][]; // [Page!]!
   }
   Role: { // field return type
-    id: string; // ID!
     locked: boolean; // Boolean!
-    slug: string; // String!
+    slug: string; // ID!
   }
   User: { // field return type
     email: string; // String!

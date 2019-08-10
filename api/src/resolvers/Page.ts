@@ -9,5 +9,6 @@ export const Page = objectType({
     t.model.slug();
     t.model.canEdit();
     t.model.canView();
+    t.model.draftOwner();
   }
 });

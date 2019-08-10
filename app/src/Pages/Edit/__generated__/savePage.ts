@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { PageCreateInput, PageUpdateInput } from "./../../__generated__/graphql-global-types";
+import { PageCreateInput, PageUpdateInput } from "./../../../__generated__/graphql-global-types";
 
 // ====================================================
 // GraphQL mutation operation: savePage

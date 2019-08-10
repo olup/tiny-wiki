@@ -8,6 +8,7 @@ import { makeSchema } from "@prisma/nexus";
 import { GraphQLServer } from "graphql-yoga";
 import { join } from "path";
 import { resolvers } from "./resolvers";
+import init from "./init";
 
 async function main() {
   const schema = makeSchema({
@@ -36,6 +37,7 @@ async function main() {
       };
     }
   });
+  init();
   // launch server
   server
     .start({

@@ -8,7 +8,7 @@
 
 export interface deleteRole_role {
   __typename: "Role";
-  id: string;
+  slug: string;
 }
 
 export interface deleteRole {
@@ -16,5 +16,5 @@ export interface deleteRole {
 }
 
 export interface deleteRoleVariables {
-  roleId: string;
+  roleSlug: string;
 }

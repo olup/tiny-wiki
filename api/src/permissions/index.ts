@@ -1,11 +1,6 @@
 import { rule, shield, allow, and, or } from "graphql-shield";
 import photon from "../libs/photon";
-import {
-  getAdminRole,
-  roleInRoles,
-  getPublicRole,
-  haveMatchingRole
-} from "../tools";
+import { roleInRoles, haveMatchingRole } from "../tools";
 
 const rules = {
   isAuthenticatedUser: rule()((parent, args, context) => {
@@ -14,11 +9,10 @@ const rules = {
   canViewPage: rule()(async (parent, args, ctx, info) => {
     const { id } = parent;
     const canView = await photon.pages.findOne({ where: { id: id } }).canView();
-    const publicRole = await getPublicRole();
-    if (roleInRoles(publicRole.id, canView.map(r => r.id))) return true;
+    if (roleInRoles("admin", canView.map(r => r.slug))) return true;
 
     const userRoles = ctx.roles;
-    return haveMatchingRole(userRoles, canView.map(r => r.id));
+    return haveMatchingRole(userRoles, canView.map(r => r.slug));
   }),
   canEditPage: rule()(async (parent, args, ctx, info) => {
     // console.log(args);
@@ -34,21 +28,19 @@ const rules = {
     //** Creation */
     if (!page) return true;
 
-    const publicRole = await getPublicRole();
-    if (roleInRoles(publicRole.id, page.canEdit.map(r => r.id))) return true;
+    if (roleInRoles("public", page.canEdit.map(r => r.slug))) return true;
 
     const userRoles = ctx.roles;
-    return haveMatchingRole(userRoles, page.canEdit.map(r => r.id));
+    return haveMatchingRole(userRoles, page.canEdit.map(r => r.slug));
   }),
   isAdmin: rule()(async (parent, args, ctx, info) => {
     const userRoles = ctx.roles;
-    const adminRole = await getAdminRole();
-    if (roleInRoles(adminRole.id, userRoles)) return true;
+    if (roleInRoles("admin", userRoles)) return true;
     return false;
   }),
   roleIsEditable: rule()(async (parent, args, ctx, info) => {
-    const id = args.where.id;
-    const role = await photon.roles.findOne({ where: { id } });
+    const slug = args.where.slug;
+    const role = await photon.roles.findOne({ where: { slug } });
     return !role.locked;
   }),
   isPageOwner: rule()(async (parent, args, ctx, info) => {

@@ -3,17 +3,14 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: getPages
+// GraphQL query operation: findManyRole
 // ====================================================
 
-export interface getPages_findManyPage {
-  __typename: "Page";
-  id: string;
-  title: string;
-  content: string | null;
+export interface findManyRole_findManyRole {
+  __typename: "Role";
   slug: string;
 }
 
-export interface getPages {
-  findManyPage: getPages_findManyPage[] | null;
+export interface findManyRole {
+  findManyRole: findManyRole_findManyRole[] | null;
 }

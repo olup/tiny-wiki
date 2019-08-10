@@ -10,7 +10,7 @@ import { UserUpdateInput } from "./../../../__generated__/graphql-global-types";
 
 export interface updateUser_updateOneUser_roles {
   __typename: "Role";
-  id: string;
+  slug: string;
 }
 
 export interface updateUser_updateOneUser {

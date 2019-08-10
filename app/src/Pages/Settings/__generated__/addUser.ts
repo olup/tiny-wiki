@@ -10,7 +10,6 @@ import { UserCreateInput } from "./../../../__generated__/graphql-global-types";
 
 export interface addUser_user_roles {
   __typename: "Role";
-  id: string;
   slug: string;
 }
 

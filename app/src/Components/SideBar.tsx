@@ -5,7 +5,10 @@ import { NavLink, Link } from "react-router-dom";
 import { Button } from "@blueprintjs/core";
 import { getPagesSideBar } from "./__generated__/getPagesSideBar";
 import { useQuery } from "@apollo/react-hooks";
-import simpleStore from "Libs/simpleStore";
+import { useSimpleStore } from "Libs/simpleStore";
+import { GoFile } from "react-icons/go";
+import { FaPowerOff } from "react-icons/fa";
+import { GET_ROLES } from "Pages/Edit/queries";
 
 const SideBar = styled.div`
   width: 350px;
@@ -19,10 +22,18 @@ const NavSection = styled.div`
 const NavHeader = styled.div`
   padding: 20px 30px;
   font-size: 20px;
+  h1 {
+    display: inline-block;
+    padding: 10px 15px;
+    color: #eee;
+    background: #222;
+    border-radius: 3px;
+  }
 `;
 
 const NavItem = styled(NavLink)`
-  display: block;
+  display: flex;
+  align-items: center;
   padding: 10px 30px;
   font-size: 19px;
   color: #464646;
@@ -31,6 +42,9 @@ const NavItem = styled(NavLink)`
   &.active {
     background-color: #eaebea;
     color: #464646;
+  }
+  svg {
+    margin-right: 10px;
   }
 `;
 
@@ -46,6 +60,7 @@ const GET_PAGES = gql`
 export default () => {
   const { data } = useQuery<getPagesSideBar>(GET_PAGES, { variables: {} });
   const pages = (data && data.listPages) || [];
+  const { roles } = useSimpleStore();
   return (
     <SideBar>
       <NavHeader>
@@ -54,7 +69,7 @@ export default () => {
       <div>
         {pages.map(page => (
           <NavItem key={page.slug} to={`/page/${page.slug}`}>
-            {page.title}
+            <GoFile /> {page.title}
           </NavItem>
         ))}
         <NavSection>
@@ -63,13 +78,15 @@ export default () => {
               Add Page
             </Button>
           </Link>
-          <Link to={`/settings`}>
-            <Button minimal icon="cog">
-              Settings
-            </Button>
-          </Link>
+          {roles.includes("admin") && (
+            <Link to={`/settings`}>
+              <Button minimal icon="cog">
+                Settings
+              </Button>
+            </Link>
+          )}
           <Link to={`/logout`}>
-            <Button minimal icon="refresh">
+            <Button minimal icon={<FaPowerOff color="#5c7080" />}>
               Log out
             </Button>
           </Link>

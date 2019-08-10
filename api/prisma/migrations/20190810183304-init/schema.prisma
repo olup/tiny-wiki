@@ -21,9 +21,8 @@ model User {
 }
 
 model Role {
-  id        String  @default(cuid()) @id @unique
+  slug      String  @default(cuid()) @id @unique
   users     User[]
-  slug      String  @unique
   locked    Boolean @default(false)
   viewPages Page[]  @relation(name: "users_can_view_pages")
   editPages Page[]  @relation(name: "users_can_edit_pages")
@@ -37,8 +36,9 @@ model Page {
   content    String?
   published  Boolean
   draftOwner User?   @relation(name: "draftOwner")
-  canView    Role[]  @relation(name: "users_can_view_pages")
-  canEdit    Role[]  @relation(name: "users_can_edit_pages")
+
+  canView Role[] @relation(name: "users_can_view_pages")
+  canEdit Role[] @relation(name: "users_can_edit_pages")
 
   parent   Page[]
   children Page[]

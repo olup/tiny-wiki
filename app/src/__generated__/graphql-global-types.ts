@@ -18,9 +18,8 @@ export interface MutationUpdateOneUserFilter {
 }
 
 export interface MutationUpdateOneUserWhereInput {
-  id?: StringFilter | null;
-  users?: MutationUpdateOneUserFilter | null;
   slug?: StringFilter | null;
+  users?: MutationUpdateOneUserFilter | null;
   locked?: BooleanFilter | null;
   viewPages?: MutationUpdateOneUserFilter | null;
   editPages?: MutationUpdateOneUserFilter | null;
@@ -36,9 +35,8 @@ export interface MutationUpsertOnePageFilter {
 }
 
 export interface MutationUpsertOnePageWhereInput {
-  id?: StringFilter | null;
-  users?: MutationUpsertOnePageFilter | null;
   slug?: StringFilter | null;
+  users?: MutationUpsertOnePageFilter | null;
   locked?: BooleanFilter | null;
   viewPages?: MutationUpsertOnePageFilter | null;
   editPages?: MutationUpsertOnePageFilter | null;
@@ -352,8 +350,7 @@ export interface PageWhereUniqueInput {
 }
 
 export interface RoleCreateInput {
-  id?: string | null;
-  slug: string;
+  slug?: string | null;
   locked?: boolean | null;
   users?: UserCreateManyWithoutUsersInput | null;
   viewPages?: PageCreateManyWithoutViewPagesInput | null;
@@ -376,31 +373,27 @@ export interface RoleCreateManyWithoutRolesInput {
 }
 
 export interface RoleCreateWithoutEditPagesInput {
-  id?: string | null;
-  slug: string;
+  slug?: string | null;
   locked?: boolean | null;
   users?: UserCreateManyWithoutUsersInput | null;
   viewPages?: PageCreateManyWithoutViewPagesInput | null;
 }
 
 export interface RoleCreateWithoutUsersInput {
-  id?: string | null;
-  slug: string;
+  slug?: string | null;
   locked?: boolean | null;
   viewPages?: PageCreateManyWithoutViewPagesInput | null;
   editPages?: PageCreateManyWithoutEditPagesInput | null;
 }
 
 export interface RoleCreateWithoutViewPagesInput {
-  id?: string | null;
-  slug: string;
+  slug?: string | null;
   locked?: boolean | null;
   users?: UserCreateManyWithoutUsersInput | null;
   editPages?: PageCreateManyWithoutEditPagesInput | null;
 }
 
 export interface RoleUpdateManyDataInput {
-  id?: string | null;
   slug?: string | null;
   locked?: boolean | null;
 }
@@ -462,7 +455,6 @@ export interface RoleUpdateWithWhereUniqueWithoutViewPagesInput {
 }
 
 export interface RoleUpdateWithoutEditPagesDataInput {
-  id?: string | null;
   slug?: string | null;
   locked?: boolean | null;
   users?: UserUpdateManyWithoutRolesInput | null;
@@ -470,7 +462,6 @@ export interface RoleUpdateWithoutEditPagesDataInput {
 }
 
 export interface RoleUpdateWithoutUsersDataInput {
-  id?: string | null;
   slug?: string | null;
   locked?: boolean | null;
   viewPages?: PageUpdateManyWithoutCanViewInput | null;
@@ -478,7 +469,6 @@ export interface RoleUpdateWithoutUsersDataInput {
 }
 
 export interface RoleUpdateWithoutViewPagesDataInput {
-  id?: string | null;
   slug?: string | null;
   locked?: boolean | null;
   users?: UserUpdateManyWithoutRolesInput | null;
@@ -504,7 +494,6 @@ export interface RoleUpsertWithWhereUniqueWithoutViewPagesInput {
 }
 
 export interface RoleWhereUniqueInput {
-  id?: string | null;
   slug?: string | null;
 }
 

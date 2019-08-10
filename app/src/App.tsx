@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import "@blueprintjs/icons/lib/css/blueprint-icons.css";
 import "@blueprintjs/core/lib/css/blueprint.css";
@@ -14,7 +14,8 @@ import {
 import Home from "Pages/Home";
 import { createGlobalStyle } from "styled-components";
 import decodeToken from "jwt-decode";
-import simpleStore from "Libs/simpleStore";
+import { useSimpleStore } from "Libs/simpleStore";
+import { storeKeyNameFromField } from "apollo-utilities";
 
 const GlobalStyle = createGlobalStyle`
   a:hover {
@@ -23,13 +24,19 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 const App: React.FC = () => {
+  const simpleStore = useSimpleStore();
+  let user: any, roles: any;
   if (localStorage.getItem("access_token")) {
     const userData: any = decodeToken(
       localStorage.getItem("access_token") || ""
     );
-    simpleStore.user = userData.user;
-    simpleStore.roles = userData.roles;
+    user = userData.user;
+    roles = userData.roles;
   }
+  useEffect(() => {
+    simpleStore.user = user;
+    simpleStore.roles = roles;
+  }, []);
   return (
     <Router>
       <GlobalStyle />

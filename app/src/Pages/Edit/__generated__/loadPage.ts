@@ -9,13 +9,11 @@
 export interface loadPage_findOnePage_canView {
   __typename: "Role";
   slug: string;
-  id: string;
 }
 
 export interface loadPage_findOnePage_canEdit {
   __typename: "Role";
   slug: string;
-  id: string;
 }
 
 export interface loadPage_findOnePage {

@@ -3,11 +3,10 @@ import { H5, H3, Tag } from "@blueprintjs/core";
 import { PageState } from "./store";
 import { useQuery } from "@apollo/react-hooks";
 import { GET_ROLES } from "./queries";
-import { getRoles } from "Pages/Settings/__generated__/getRoles";
 import {
   findManyRole_findManyRole,
   findManyRole
-} from "Pages/__generated__/findManyRole";
+} from "./__generated__/findManyRole";
 import React from "react";
 
 const StyledTag = styled(Tag)`
@@ -20,7 +19,7 @@ const roleIn = (
   roles: findManyRole_findManyRole[] | null | undefined
 ) => {
   if (!roles) return false;
-  return roles.map(r => r.id).includes(role.id);
+  return roles.map(r => r.slug).includes(role.slug);
 };
 
 const toggleRole = (
@@ -29,7 +28,7 @@ const toggleRole = (
 ): findManyRole_findManyRole[] => {
   if (!roles) return [];
   const isIn = roleIn(role, roles);
-  if (isIn) return roles.filter(r => r.id !== role.id);
+  if (isIn) return roles.filter(r => r.slug !== role.slug);
   else return [...roles, role];
 };
 

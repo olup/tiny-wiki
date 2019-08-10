@@ -27,7 +27,6 @@ input MutationUpdateOneUserFilter {
 input MutationUpdateOneUserWhereInput {
   AND: [MutationUpdateOneUserWhereInput!]
   editPages: MutationUpdateOneUserFilter
-  id: StringFilter
   locked: BooleanFilter
   NOT: [MutationUpdateOneUserWhereInput!]
   OR: [MutationUpdateOneUserWhereInput!]
@@ -45,7 +44,6 @@ input MutationUpsertOnePageFilter {
 input MutationUpsertOnePageWhereInput {
   AND: [MutationUpsertOnePageWhereInput!]
   editPages: MutationUpsertOnePageFilter
-  id: StringFilter
   locked: BooleanFilter
   NOT: [MutationUpsertOnePageWhereInput!]
   OR: [MutationUpsertOnePageWhereInput!]
@@ -58,6 +56,7 @@ type Page {
   canEdit(after: String, before: String, first: Int, last: Int, skip: Int): [Role!]
   canView(after: String, before: String, first: Int, last: Int, skip: Int): [Role!]
   content: String
+  draftOwner: User
   id: ID!
   slug: String!
   title: String!
@@ -375,16 +374,14 @@ type Query {
 }
 
 type Role {
-  id: ID!
   locked: Boolean!
-  slug: String!
+  slug: ID!
 }
 
 input RoleCreateInput {
   editPages: PageCreateManyWithoutEditPagesInput
-  id: ID
   locked: Boolean
-  slug: String!
+  slug: ID
   users: UserCreateManyWithoutUsersInput
   viewPages: PageCreateManyWithoutViewPagesInput
 }
@@ -405,33 +402,29 @@ input RoleCreateManyWithoutRolesInput {
 }
 
 input RoleCreateWithoutEditPagesInput {
-  id: ID
   locked: Boolean
-  slug: String!
+  slug: ID
   users: UserCreateManyWithoutUsersInput
   viewPages: PageCreateManyWithoutViewPagesInput
 }
 
 input RoleCreateWithoutUsersInput {
   editPages: PageCreateManyWithoutEditPagesInput
-  id: ID
   locked: Boolean
-  slug: String!
+  slug: ID
   viewPages: PageCreateManyWithoutViewPagesInput
 }
 
 input RoleCreateWithoutViewPagesInput {
   editPages: PageCreateManyWithoutEditPagesInput
-  id: ID
   locked: Boolean
-  slug: String!
+  slug: ID
   users: UserCreateManyWithoutUsersInput
 }
 
 input RoleUpdateManyDataInput {
-  id: ID
   locked: Boolean
-  slug: String
+  slug: ID
 }
 
 input RoleUpdateManyWithoutEditPagesInput {
@@ -476,26 +469,23 @@ input RoleUpdateManyWithWhereNestedInput {
 }
 
 input RoleUpdateWithoutEditPagesDataInput {
-  id: ID
   locked: Boolean
-  slug: String
+  slug: ID
   users: UserUpdateManyWithoutRolesInput
   viewPages: PageUpdateManyWithoutCanViewInput
 }
 
 input RoleUpdateWithoutUsersDataInput {
   editPages: PageUpdateManyWithoutCanEditInput
-  id: ID
   locked: Boolean
-  slug: String
+  slug: ID
   viewPages: PageUpdateManyWithoutCanViewInput
 }
 
 input RoleUpdateWithoutViewPagesDataInput {
   editPages: PageUpdateManyWithoutCanEditInput
-  id: ID
   locked: Boolean
-  slug: String
+  slug: ID
   users: UserUpdateManyWithoutRolesInput
 }
 
@@ -533,8 +523,7 @@ input RoleUpsertWithWhereUniqueWithoutViewPagesInput {
 }
 
 input RoleWhereUniqueInput {
-  id: ID
-  slug: String
+  slug: ID
 }
 
 input StringFilter {

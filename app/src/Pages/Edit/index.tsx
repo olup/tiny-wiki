@@ -1,10 +1,5 @@
 import { useQuery, useApolloClient, useMutation } from "@apollo/react-hooks";
 import { Button, Tab, Tabs } from "@blueprintjs/core";
-import {
-  loadPageContentContent,
-  loadPageContentContentVariables,
-  loadPageContentContent_findOnePage
-} from "Pages/__generated__/loadPageContentContent";
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
@@ -19,16 +14,17 @@ import {
 } from "./queries";
 import Settings from "./Settings";
 import { PageState } from "./store";
-import { findManyRole } from "Pages/__generated__/findManyRole";
-import {
-  deletePage,
-  deletePageVariables
-} from "Pages/__generated__/deletePage";
-import { loadPage_findOnePage } from "Pages/__generated__/loadPage";
-import { savePage, savePageVariables } from "Pages/__generated__/savePage";
+import { findManyRole } from "./__generated__/findManyRole";
+import { deletePage, deletePageVariables } from "./__generated__/deletePage";
+import { loadPage_findOnePage } from "./__generated__/loadPage";
+import { savePage, savePageVariables } from "./__generated__/savePage";
 import toast from "Libs/toast";
-import simpleStore from "Libs/simpleStore";
+import { useSimpleStore } from "Libs/simpleStore";
 import slugify from "slugify";
+import {
+  loadPageContentContent,
+  loadPageContentContentVariables
+} from "Pages/__generated__/loadPageContentContent";
 
 const TopBar = styled.div`
   margin-bottom: 20px;
@@ -39,7 +35,7 @@ export default () => {
   const slug = match.params.slug;
   return (
     <PageState.Provider>
-      <Loader slug={slug} />;
+      <Loader slug={slug} />
       <PageWrapper />
     </PageState.Provider>
   );
@@ -47,11 +43,12 @@ export default () => {
 
 const Loader = ({ slug }: { slug: string }) => {
   const updatePage = PageState.useStoreActions(a => a.updatePage);
+  const setLoading = PageState.useStoreActions(a => a.setLoading);
   const setIsNew = PageState.useStoreActions(a => a.setIsNew);
 
   setIsNew(!slug);
 
-  const { data } = useQuery<
+  const { data, loading } = useQuery<
     loadPageContentContent,
     loadPageContentContentVariables
   >(LOAD_PAGE, {
@@ -66,13 +63,16 @@ const Loader = ({ slug }: { slug: string }) => {
   };
 
   updatePage(page);
+  setLoading(loading);
   return null;
 };
 
 const PageWrapper = () => {
   const isNew = PageState.useStoreState(state => state.isNew);
+  const loading = PageState.useStoreState(state => state.loading);
   const page = PageState.useStoreState(state => state.page);
   const { onSave, onDelete } = useMethodsHook();
+  if (loading) return null;
   return (
     <div style={{ maxWidth: 768, margin: "0 auto" }}>
       <TopBar>
@@ -82,11 +82,13 @@ const PageWrapper = () => {
           </Link>
         )}
         <Button icon="floppy-disk" minimal onClick={onSave}>
-          Save
+          {isNew ? "Create" : "Save"}
         </Button>
-        <Button icon="trash" intent="danger" minimal onClick={onDelete}>
-          Delete
-        </Button>
+        {!isNew && (
+          <Button icon="trash" intent="danger" minimal onClick={onDelete}>
+            Delete
+          </Button>
+        )}
       </TopBar>
       <Tabs>
         <Tab id="edit" title="Edit" panel={<Editor />} />
@@ -100,6 +102,7 @@ const useMethodsHook = () => {
   const { history } = useRouter();
   const page = PageState.useStoreState(state => state.page);
   const isNew = PageState.useStoreState(state => state.isNew);
+  const simpleStore = useSimpleStore();
   const { refetch: updatePages } = useQuery(GET_PAGES, { skip: true });
   const [deletePage] = useMutation<deletePage, deletePageVariables>(
     DELETE_PAGE
@@ -129,20 +132,20 @@ const useMethodsHook = () => {
           draftOwner: { connect: { id: simpleStore.user.id } },
           published: true,
           canView: {
-            connect: page.canView && page.canView.map(r => ({ id: r.id }))
+            connect: page.canView && page.canView.map(r => ({ slug: r.slug }))
           },
           canEdit: {
-            connect: page.canEdit && page.canEdit.map(r => ({ id: r.id }))
+            connect: page.canEdit && page.canEdit.map(r => ({ slug: r.slug }))
           }
         },
         dataUpdate: {
           title: page.title || "",
           content: page.content || "",
           canView: {
-            set: page.canView && page.canView.map(r => ({ id: r.id }))
+            set: page.canView && page.canView.map(r => ({ slug: r.slug }))
           },
           canEdit: {
-            set: page.canEdit && page.canEdit.map(r => ({ id: r.id }))
+            set: page.canEdit && page.canEdit.map(r => ({ slug: r.slug }))
           }
         }
       }

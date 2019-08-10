@@ -9,7 +9,8 @@ import {
   H1,
   Button,
   EditableText,
-  MenuItem
+  MenuItem,
+  H3
 } from "@blueprintjs/core";
 import { MultiSelect } from "@blueprintjs/select";
 import { useQuery, useMutation } from "@apollo/react-hooks";
@@ -23,7 +24,7 @@ const UPDATE_USER = gql`
     updateOneUser(where: { id: $id }, data: $userData) {
       id
       roles {
-        id
+        slug
       }
     }
   }
@@ -35,7 +36,6 @@ const GET_USERS = gql`
       id
       email
       roles {
-        id
         slug
       }
     }
@@ -48,7 +48,6 @@ const ADD_USER = gql`
       id
       email
       roles {
-        id
         slug
       }
     }
@@ -58,7 +57,6 @@ const ADD_USER = gql`
 const GET_ROLES = gql`
   query getRoles {
     roles: findManyRole {
-      id
       slug
     }
   }
@@ -107,7 +105,7 @@ const UserLine = ({ user, onDelete, roles }: UserLine) => {
     updateUser({
       variables: {
         id: user.id,
-        userData: { roles: { connect: [{ id: role.id }] } }
+        userData: { roles: { connect: [{ slug: role.slug }] } }
       }
     });
   };
@@ -122,7 +120,7 @@ const UserLine = ({ user, onDelete, roles }: UserLine) => {
     updateUser({
       variables: {
         id: user.id,
-        userData: { roles: { disconnect: [{ id: role.id }] } }
+        userData: { roles: { disconnect: [{ slug: role.slug }] } }
       }
     });
   };
@@ -165,8 +163,8 @@ export default () => {
   const users = (data && data.users) || [];
   const roles = (rolesData && rolesData.roles) || [];
   return (
-    <Card elevation={Elevation.TWO} style={{ marginTop: 20 }}>
-      <H1>Users</H1>
+    <div>
+      <H3>Users</H3>
       <Body>
         {users.map(user => (
           <UserLine
@@ -202,6 +200,6 @@ export default () => {
           </Button>
         </Line>
       </Body>
-    </Card>
+    </div>
   );
 };
