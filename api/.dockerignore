@@ -10,3 +10,4 @@ README.md
 build
 node_modules
 db
+.env

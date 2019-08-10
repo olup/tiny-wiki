@@ -23,12 +23,14 @@ WORKDIR /api
 COPY ./api .
 RUN yarn install
 RUN yarn build; exit 0
-RUN rm -rf node_modules
-RUN yarn install --production=true
+
+# RUN rm -rf node_modules
+# RUN yarn install --production=true
 
 ENV JWT_SECRET=secret
 ENV GOOGLE_CLIENT_ID=255479022233-gcgpkkk2sriblm0fppmp4rg7ud6favie.apps.googleusercontent.com
 
+RUN prisma2 -v
 RUN prisma2 lift up
 
 COPY ./entrypoint.sh /entrypoint.sh
