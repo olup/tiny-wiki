@@ -6,6 +6,7 @@
     "build": "tsc"
   },
   "dependencies": {
+    "@prisma/nexus": "^0.0.1",
     "dotenv": "^8.0.0",
     "express": "^4.17.1",
     "google-auth-library": "^5.1.0",
@@ -20,7 +21,6 @@
     "typeorm": "^0.2.18"
   },
   "devDependencies": {
-    "@prisma/nexus": "^0.0.1",
     "@types/graphql": "^14.2.3",
     "@types/jsonwebtoken": "^8.3.2",
     "@types/node": "10.14.9",
