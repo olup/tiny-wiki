@@ -10,10 +10,10 @@ RUN yarn install
 COPY ./app/ .
 ENV REACT_APP_API_URL=/graphql
 RUN yarn build
-RUN mkdir -p db
 
 FROM origin as build
 RUN npm install prisma2 -g --unsafe-perm
+RUN prisma2 -v
 RUN apk add nginx tini
 
 WORKDIR /app

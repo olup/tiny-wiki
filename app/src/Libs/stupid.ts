@@ -3,22 +3,23 @@ import onChange from "on-change";
 import { useState } from "react";
 
 export default <T>(initialStore: T) => {
-  const triggers: ((e?: any) => void)[] = [];
+  const triggers: (((e?: any) => void) | null)[] = [];
   const subscribe = (callback: (e?: any) => void) => {
-    const position = triggers.length;
-    triggers.push(callback);
+    const emptyPosition = triggers.indexOf(null);
+    const position = emptyPosition === -1 ? triggers.length : emptyPosition;
+    triggers[position] = callback;
     return position;
   };
   const unSubscribe = (handle: number) => {
-    triggers.splice(handle, 1);
+    triggers[handle] = null;
   };
 
   const dynamicStore = onChange(initialStore, function() {
     console.log(this);
-    triggers.map(trigger => trigger());
+    triggers.map(trigger => trigger && trigger());
   });
   const useStore = () => {
-    const [store, setStore] = useState(0);
+    const [_, setStore] = useState(0);
     useEffect(() => {
       const handle = subscribe(() => setStore(Date.now()));
       return () => unSubscribe(handle);
