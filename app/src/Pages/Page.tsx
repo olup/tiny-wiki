@@ -27,6 +27,7 @@ type PageProps = {
 const LOAD_PAGE = gql`
   query loadPageContentContent($slug: String!) {
     findOnePage(where: { slug: $slug }) {
+      id
       title
       content
       draftOwner {
@@ -51,12 +52,13 @@ const Content = styled.div`
 `;
 
 export default ({ match }: PageProps) => {
-  const { data, loading } = useQuery<
+  const { data, loading, error } = useQuery<
     loadPageContentContent,
     loadPageContentContentVariables
   >(LOAD_PAGE, {
     variables: { slug: match.params.slug }
   });
+  if (error) console.log(error);
   const page = data && data.findOnePage;
   const { roles, user } = useSimpleStore();
   if (!page || loading) return null;

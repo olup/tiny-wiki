@@ -15,7 +15,6 @@ export default <T>(initialStore: T) => {
   };
 
   const dynamicStore = onChange(initialStore, function() {
-    console.log(this);
     triggers.map(trigger => trigger && trigger());
   });
   const useStore = () => {

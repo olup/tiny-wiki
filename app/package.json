@@ -2,7 +2,7 @@
   "name": "front",
   "version": "0.1.0",
   "dependencies": {
-    "@apollo/react-hooks": "^3.0.0",
+    "@apollo/react-hooks": "^3.0.1",
     "@blueprintjs/core": "^3.17.1",
     "@blueprintjs/select": "^3.9.0",
     "@types/jest": "24.0.15",

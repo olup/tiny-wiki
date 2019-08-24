@@ -92,7 +92,7 @@ const PageWrapper = () => {
       </TopBar>
       <Tabs>
         <Tab id="edit" title="Edit" panel={<Editor />} />
-        <Tab id="settings" title="Settings" panel={<Settings />} />
+        {!isNew && <Tab id="settings" title="Settings" panel={<Settings />} />}
       </Tabs>
     </div>
   );
