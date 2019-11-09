@@ -3,7 +3,6 @@ import styled from "styled-components";
 import EditPage from "./Edit";
 import { Route, Switch, Redirect } from "react-router-dom";
 import Page from "./Page";
-import Settings from "./Settings";
 import SideBar from "Components/SideBar";
 
 const StyledPage = styled.div`
@@ -25,10 +24,9 @@ export default () => {
       <SideBar />
       <Content>
         <Switch>
-          <Route path="/page/create" exact component={EditPage} />
+          <Route path="/create-page" exact component={EditPage} />
           <Route path="/page/:slug" exact component={Page} />
           <Route path="/page/:slug/edit" exact component={EditPage} />
-          <Route path="/settings" exact component={Settings} />
           <Route render={() => <Redirect to="/" />} />
         </Switch>
       </Content>

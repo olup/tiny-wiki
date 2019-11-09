@@ -1,12 +1,13 @@
 import photon from "../libs/photon";
-import { objectType } from "@prisma/nexus";
+import { objectType } from "nexus";
 
 export const Query = objectType({
   name: "Query",
   definition(t) {
-    t.crud.findOnePage();
-    t.crud.findManyUser();
-    t.crud.findManyRole();
+    t.crud.page();
+    t.crud.users();
+    t.crud.roles();
+    t.crud.pages({ filtering: true });
 
     t.list.field("listPages", {
       type: "Page",

@@ -40,7 +40,7 @@ export const DELETE_PAGE = gql`
 
 export const LOAD_PAGE = gql`
   query loadPage($slug: String!) {
-    findOnePage(where: { slug: $slug }) {
+    page(where: { slug: $slug }) {
       id
       slug
       title
@@ -57,7 +57,7 @@ export const LOAD_PAGE = gql`
 
 export const GET_ROLES = gql`
   query findManyRole {
-    findManyRole {
+    roles {
       slug
     }
   }

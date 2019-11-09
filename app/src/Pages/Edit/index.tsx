@@ -1,24 +1,15 @@
 import { useQuery, useApolloClient, useMutation } from "@apollo/react-hooks";
-import { Button, Tab, Tabs } from "@blueprintjs/core";
+import Button from "Components/Button";
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import useRouter from "use-react-router";
+import { useRouteMatch } from "react-router";
 import Editor from "./Editor";
-import {
-  LOAD_PAGE,
-  GET_PAGES,
-  GET_ROLES,
-  DELETE_PAGE,
-  SAVE_PAGE
-} from "./queries";
-import Settings from "./Settings";
+import { LOAD_PAGE, GET_PAGES, DELETE_PAGE, SAVE_PAGE } from "./queries";
 import { PageState } from "./store";
-import { findManyRole } from "./__generated__/findManyRole";
 import { deletePage, deletePageVariables } from "./__generated__/deletePage";
-import { loadPage_findOnePage } from "./__generated__/loadPage";
 import { savePage, savePageVariables } from "./__generated__/savePage";
-import toast from "Libs/toast";
 import { useSimpleStore } from "Libs/simpleStore";
 import slugify from "slugify";
 import {
@@ -31,35 +22,37 @@ const TopBar = styled.div`
 `;
 
 export default () => {
-  const { match, history } = useRouter<{ slug: string }>();
-  const slug = match.params.slug;
   return (
     <PageState.Provider>
-      <Loader slug={slug} />
+      <Loader />
       <PageWrapper />
     </PageState.Provider>
   );
 };
 
-const Loader = ({ slug }: { slug: string }) => {
+const Loader = () => {
+  const match = useRouteMatch<{ slug: string }>({ path: "/page/:slug/edit" });
+  const setIsNew = PageState.useStoreActions(a => a.setIsNew);
+  const isCreation = !match;
+  const slug = (match && match.params.slug) || "";
+
   const updatePage = PageState.useStoreActions(a => a.updatePage);
   const setLoading = PageState.useStoreActions(a => a.setLoading);
-  const setIsNew = PageState.useStoreActions(a => a.setIsNew);
-
-  setIsNew(!slug);
 
   const { data, loading } = useQuery<
     loadPageContentContent,
     loadPageContentContentVariables
   >(LOAD_PAGE, {
-    skip: !slug,
+    skip: isCreation,
     variables: { slug }
   });
 
-  const page = (data && data.findOnePage) || {
+  setIsNew(isCreation || !(data && data.page));
+
+  const page = (data && data.page) || {
     title: "",
     content: "",
-    slug: ""
+    slug
   };
 
   updatePage(page);
@@ -71,29 +64,17 @@ const PageWrapper = () => {
   const isNew = PageState.useStoreState(state => state.isNew);
   const loading = PageState.useStoreState(state => state.loading);
   const page = PageState.useStoreState(state => state.page);
+
   const { onSave, onDelete } = useMethodsHook();
+
   if (loading) return null;
   return (
     <div style={{ maxWidth: 768, margin: "0 auto" }}>
       <TopBar>
-        {!isNew && (
-          <Link to={`/page/${(page && page.slug) || ""}`}>
-            <Button icon="arrow-left" minimal />
-          </Link>
-        )}
-        <Button icon="floppy-disk" minimal onClick={onSave}>
-          {isNew ? "Create" : "Save"}
-        </Button>
-        {!isNew && (
-          <Button icon="trash" intent="danger" minimal onClick={onDelete}>
-            Delete
-          </Button>
-        )}
+        <Button onClick={onSave}>Save</Button>
+        {!isNew && <Button onClick={onDelete}>Delete</Button>}
       </TopBar>
-      <Tabs>
-        <Tab id="edit" title="Edit" panel={<Editor />} />
-        {!isNew && <Tab id="settings" title="Settings" panel={<Settings />} />}
-      </Tabs>
+      <Editor />
     </div>
   );
 };
@@ -120,6 +101,12 @@ const useMethodsHook = () => {
   };
 
   const onSave = async () => {
+    const slug =
+      page.slug ||
+      slugify(page.title || "", {
+        lower: true
+      });
+
     await client.mutate<savePage, savePageVariables>({
       mutation: SAVE_PAGE,
       variables: {
@@ -127,32 +114,21 @@ const useMethodsHook = () => {
         dataCreate: {
           title: page.title || "",
           content: page.content || "",
-          slug: page.slug || slugify(page.title || ""),
+          slug,
           // @ts-ignore
           draftOwner: { connect: { id: simpleStore.user.id } },
-          published: true,
-          canView: {
-            connect: page.canView && page.canView.map(r => ({ slug: r.slug }))
-          },
-          canEdit: {
-            connect: page.canEdit && page.canEdit.map(r => ({ slug: r.slug }))
-          }
+          published: true
         },
         dataUpdate: {
           title: page.title || "",
-          content: page.content || "",
-          canView: {
-            set: page.canView && page.canView.map(r => ({ slug: r.slug }))
-          },
-          canEdit: {
-            set: page.canEdit && page.canEdit.map(r => ({ slug: r.slug }))
-          }
+          content: page.content || ""
         }
       }
     });
+
     await updatePages();
-    toast.show({ message: "Saved", icon: "tick" });
-    if (isNew) history.push(`/page/${slugify(page.title || "")}/edit`);
+
+    history.push(`/page/${slug}`);
   };
 
   return { onDelete, onSave };

@@ -1,6 +1,5 @@
 import { sign } from "jsonwebtoken";
-import { stringArg } from "@prisma/nexus";
-import { objectType } from "@prisma/nexus";
+import { objectType, stringArg } from "nexus";
 import { verifyGoogleLogin } from "../libs/google";
 import photon from "../libs/photon";
 

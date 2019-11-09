@@ -1,8 +1,7 @@
-import { H1 } from "@blueprintjs/core";
 import React from "react";
-import Textarea from "react-autosize-textarea";
 import styled from "styled-components";
 import { PageState } from "./store";
+import MarkdownEditor from "Components/MarkdownEditor";
 
 const StyledTitleInput = styled.input`
   padding: 10px;
@@ -18,22 +17,6 @@ const StyledTitleInput = styled.input`
   }
 `;
 
-const StyledContentInput = styled(Textarea)`
-  padding: 10px;
-  border: 2px dashed transparent;
-  outline: none;
-  width: 100%;
-  font: inherit;
-  line-height: 1.8;
-  resize: none;
-  overflow: hidden;
-  &:hover,
-  &:focus {
-    //background-color: #f9f9f9;
-    border-color: #ddd;
-  }
-`;
-
 const StyledEditor = styled.div`
   margin: 10px -10px;
 `;
@@ -44,17 +27,16 @@ export default () => {
   if (!page) return null;
   return (
     <StyledEditor>
-      <H1>
+      <h1>
         <StyledTitleInput
           placeholder="Title"
           value={page.title}
           onChange={e => updatePage({ title: e.target.value })}
         />
-      </H1>
-      <StyledContentInput
-        placeholder="Write markdown ..."
+      </h1>
+      <MarkdownEditor
         value={page.content || ""}
-        onChange={(e: any) => updatePage({ content: e.target.value })}
+        onChange={(content: string) => updatePage({ content })}
       />
     </StyledEditor>
   );

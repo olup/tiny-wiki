@@ -2,9 +2,10 @@ require("dotenv").config();
 
 import { getUserFromJwt } from "./utils";
 import permissions from "./permissions";
-import { nexusPrismaPlugin } from "@generated/nexus-prisma";
+import { nexusPrismaPlugin } from "nexus-prisma";
+import { makeSchema } from "nexus";
 import photon from "./libs/photon";
-import { makeSchema } from "@prisma/nexus";
+
 import { GraphQLServer } from "graphql-yoga";
 import { join } from "path";
 import { resolvers } from "./resolvers";
@@ -13,6 +14,11 @@ import init from "./init";
 async function main() {
   const schema = makeSchema({
     types: resolvers,
+    plugins: [
+      nexusPrismaPlugin({
+        photon: ctx => photon
+      })
+    ],
     outputs: {
       schema: join(__dirname, "generated/schema.graphql"),
       typegen: join(__dirname, "generated/nexus.ts")

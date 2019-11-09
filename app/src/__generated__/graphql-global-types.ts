@@ -11,38 +11,18 @@ export interface BooleanFilter {
   not?: boolean | null;
 }
 
-export interface MutationUpdateOneUserFilter {
-  every?: MutationUpdateOneUserWhereInput | null;
-  some?: MutationUpdateOneUserWhereInput | null;
-  none?: MutationUpdateOneUserWhereInput | null;
-}
-
-export interface MutationUpdateOneUserWhereInput {
-  slug?: StringFilter | null;
-  users?: MutationUpdateOneUserFilter | null;
-  locked?: BooleanFilter | null;
-  viewPages?: MutationUpdateOneUserFilter | null;
-  editPages?: MutationUpdateOneUserFilter | null;
-  AND?: MutationUpdateOneUserWhereInput[] | null;
-  OR?: MutationUpdateOneUserWhereInput[] | null;
-  NOT?: MutationUpdateOneUserWhereInput[] | null;
-}
-
-export interface MutationUpsertOnePageFilter {
-  every?: MutationUpsertOnePageWhereInput | null;
-  some?: MutationUpsertOnePageWhereInput | null;
-  none?: MutationUpsertOnePageWhereInput | null;
-}
-
-export interface MutationUpsertOnePageWhereInput {
-  slug?: StringFilter | null;
-  users?: MutationUpsertOnePageFilter | null;
-  locked?: BooleanFilter | null;
-  viewPages?: MutationUpsertOnePageFilter | null;
-  editPages?: MutationUpsertOnePageFilter | null;
-  AND?: MutationUpsertOnePageWhereInput[] | null;
-  OR?: MutationUpsertOnePageWhereInput[] | null;
-  NOT?: MutationUpsertOnePageWhereInput[] | null;
+export interface NullableStringFilter {
+  equals?: string | null;
+  not?: string | null;
+  in?: string[] | null;
+  notIn?: string[] | null;
+  lt?: string | null;
+  lte?: string | null;
+  gt?: string | null;
+  gte?: string | null;
+  contains?: string | null;
+  startsWith?: string | null;
+  endsWith?: string | null;
 }
 
 export interface PageCreateInput {
@@ -54,12 +34,12 @@ export interface PageCreateInput {
   draftOwner?: UserCreateOneWithoutDraftOwnerInput | null;
   canView?: RoleCreateManyWithoutCanViewInput | null;
   canEdit?: RoleCreateManyWithoutCanEditInput | null;
-  parent?: PageCreateManyWithoutParentInput | null;
+  parents?: PageCreateManyWithoutParentsInput | null;
   children?: PageCreateManyWithoutChildrenInput | null;
 }
 
 export interface PageCreateManyWithoutChildrenInput {
-  create?: PageCreateWithoutParentInput[] | null;
+  create?: PageCreateWithoutParentsInput[] | null;
   connect?: PageWhereUniqueInput[] | null;
 }
 
@@ -73,7 +53,7 @@ export interface PageCreateManyWithoutEditPagesInput {
   connect?: PageWhereUniqueInput[] | null;
 }
 
-export interface PageCreateManyWithoutParentInput {
+export interface PageCreateManyWithoutParentsInput {
   create?: PageCreateWithoutChildrenInput[] | null;
   connect?: PageWhereUniqueInput[] | null;
 }
@@ -91,7 +71,7 @@ export interface PageCreateWithoutCanEditInput {
   published: boolean;
   draftOwner?: UserCreateOneWithoutDraftOwnerInput | null;
   canView?: RoleCreateManyWithoutCanViewInput | null;
-  parent?: PageCreateManyWithoutParentInput | null;
+  parents?: PageCreateManyWithoutParentsInput | null;
   children?: PageCreateManyWithoutChildrenInput | null;
 }
 
@@ -103,7 +83,7 @@ export interface PageCreateWithoutCanViewInput {
   published: boolean;
   draftOwner?: UserCreateOneWithoutDraftOwnerInput | null;
   canEdit?: RoleCreateManyWithoutCanEditInput | null;
-  parent?: PageCreateManyWithoutParentInput | null;
+  parents?: PageCreateManyWithoutParentsInput | null;
   children?: PageCreateManyWithoutChildrenInput | null;
 }
 
@@ -116,7 +96,7 @@ export interface PageCreateWithoutChildrenInput {
   draftOwner?: UserCreateOneWithoutDraftOwnerInput | null;
   canView?: RoleCreateManyWithoutCanViewInput | null;
   canEdit?: RoleCreateManyWithoutCanEditInput | null;
-  parent?: PageCreateManyWithoutParentInput | null;
+  parents?: PageCreateManyWithoutParentsInput | null;
 }
 
 export interface PageCreateWithoutDraftOwnerInput {
@@ -127,11 +107,11 @@ export interface PageCreateWithoutDraftOwnerInput {
   published: boolean;
   canView?: RoleCreateManyWithoutCanViewInput | null;
   canEdit?: RoleCreateManyWithoutCanEditInput | null;
-  parent?: PageCreateManyWithoutParentInput | null;
+  parents?: PageCreateManyWithoutParentsInput | null;
   children?: PageCreateManyWithoutChildrenInput | null;
 }
 
-export interface PageCreateWithoutParentInput {
+export interface PageCreateWithoutParentsInput {
   id?: string | null;
   title: string;
   slug: string;
@@ -143,6 +123,27 @@ export interface PageCreateWithoutParentInput {
   children?: PageCreateManyWithoutChildrenInput | null;
 }
 
+export interface PageFilter {
+  every?: PageWhereInput | null;
+  some?: PageWhereInput | null;
+  none?: PageWhereInput | null;
+}
+
+export interface PageScalarWhereInput {
+  id?: StringFilter | null;
+  title?: StringFilter | null;
+  slug?: StringFilter | null;
+  content?: NullableStringFilter | null;
+  published?: BooleanFilter | null;
+  canView?: RoleFilter | null;
+  canEdit?: RoleFilter | null;
+  parents?: PageFilter | null;
+  children?: PageFilter | null;
+  AND?: PageScalarWhereInput[] | null;
+  OR?: PageScalarWhereInput[] | null;
+  NOT?: PageScalarWhereInput[] | null;
+}
+
 export interface PageUpdateInput {
   id?: string | null;
   title?: string | null;
@@ -152,8 +153,8 @@ export interface PageUpdateInput {
   draftOwner?: UserUpdateOneWithoutDraftsInput | null;
   canView?: RoleUpdateManyWithoutViewPagesInput | null;
   canEdit?: RoleUpdateManyWithoutEditPagesInput | null;
-  parent?: PageUpdateManyWithoutChildrenInput | null;
-  children?: PageUpdateManyWithoutParentInput | null;
+  parents?: PageUpdateManyWithoutChildrenInput | null;
+  children?: PageUpdateManyWithoutParentsInput | null;
 }
 
 export interface PageUpdateManyDataInput {
@@ -165,7 +166,7 @@ export interface PageUpdateManyDataInput {
 }
 
 export interface PageUpdateManyWithWhereNestedInput {
-  where: MutationUpdateOneUserWhereInput;
+  where: PageScalarWhereInput;
   data: PageUpdateManyDataInput;
 }
 
@@ -177,7 +178,7 @@ export interface PageUpdateManyWithoutCanEditInput {
   delete?: PageWhereUniqueInput[] | null;
   update?: PageUpdateWithWhereUniqueWithoutCanEditInput[] | null;
   updateMany?: PageUpdateManyWithWhereNestedInput[] | null;
-  deleteMany?: MutationUpdateOneUserWhereInput[] | null;
+  deleteMany?: PageScalarWhereInput[] | null;
   upsert?: PageUpsertWithWhereUniqueWithoutCanEditInput[] | null;
 }
 
@@ -189,7 +190,7 @@ export interface PageUpdateManyWithoutCanViewInput {
   delete?: PageWhereUniqueInput[] | null;
   update?: PageUpdateWithWhereUniqueWithoutCanViewInput[] | null;
   updateMany?: PageUpdateManyWithWhereNestedInput[] | null;
-  deleteMany?: MutationUpdateOneUserWhereInput[] | null;
+  deleteMany?: PageScalarWhereInput[] | null;
   upsert?: PageUpsertWithWhereUniqueWithoutCanViewInput[] | null;
 }
 
@@ -201,7 +202,7 @@ export interface PageUpdateManyWithoutChildrenInput {
   delete?: PageWhereUniqueInput[] | null;
   update?: PageUpdateWithWhereUniqueWithoutChildrenInput[] | null;
   updateMany?: PageUpdateManyWithWhereNestedInput[] | null;
-  deleteMany?: MutationUpsertOnePageWhereInput[] | null;
+  deleteMany?: PageScalarWhereInput[] | null;
   upsert?: PageUpsertWithWhereUniqueWithoutChildrenInput[] | null;
 }
 
@@ -213,20 +214,20 @@ export interface PageUpdateManyWithoutDraftOwnerInput {
   delete?: PageWhereUniqueInput[] | null;
   update?: PageUpdateWithWhereUniqueWithoutDraftOwnerInput[] | null;
   updateMany?: PageUpdateManyWithWhereNestedInput[] | null;
-  deleteMany?: MutationUpdateOneUserWhereInput[] | null;
+  deleteMany?: PageScalarWhereInput[] | null;
   upsert?: PageUpsertWithWhereUniqueWithoutDraftOwnerInput[] | null;
 }
 
-export interface PageUpdateManyWithoutParentInput {
-  create?: PageCreateWithoutParentInput[] | null;
+export interface PageUpdateManyWithoutParentsInput {
+  create?: PageCreateWithoutParentsInput[] | null;
   connect?: PageWhereUniqueInput[] | null;
   set?: PageWhereUniqueInput[] | null;
   disconnect?: PageWhereUniqueInput[] | null;
   delete?: PageWhereUniqueInput[] | null;
-  update?: PageUpdateWithWhereUniqueWithoutParentInput[] | null;
+  update?: PageUpdateWithWhereUniqueWithoutParentsInput[] | null;
   updateMany?: PageUpdateManyWithWhereNestedInput[] | null;
-  deleteMany?: MutationUpsertOnePageWhereInput[] | null;
-  upsert?: PageUpsertWithWhereUniqueWithoutParentInput[] | null;
+  deleteMany?: PageScalarWhereInput[] | null;
+  upsert?: PageUpsertWithWhereUniqueWithoutParentsInput[] | null;
 }
 
 export interface PageUpdateWithWhereUniqueWithoutCanEditInput {
@@ -249,9 +250,9 @@ export interface PageUpdateWithWhereUniqueWithoutDraftOwnerInput {
   data: PageUpdateWithoutDraftOwnerDataInput;
 }
 
-export interface PageUpdateWithWhereUniqueWithoutParentInput {
+export interface PageUpdateWithWhereUniqueWithoutParentsInput {
   where: PageWhereUniqueInput;
-  data: PageUpdateWithoutParentDataInput;
+  data: PageUpdateWithoutParentsDataInput;
 }
 
 export interface PageUpdateWithoutCanEditDataInput {
@@ -262,8 +263,8 @@ export interface PageUpdateWithoutCanEditDataInput {
   published?: boolean | null;
   draftOwner?: UserUpdateOneWithoutDraftsInput | null;
   canView?: RoleUpdateManyWithoutViewPagesInput | null;
-  parent?: PageUpdateManyWithoutChildrenInput | null;
-  children?: PageUpdateManyWithoutParentInput | null;
+  parents?: PageUpdateManyWithoutChildrenInput | null;
+  children?: PageUpdateManyWithoutParentsInput | null;
 }
 
 export interface PageUpdateWithoutCanViewDataInput {
@@ -274,8 +275,8 @@ export interface PageUpdateWithoutCanViewDataInput {
   published?: boolean | null;
   draftOwner?: UserUpdateOneWithoutDraftsInput | null;
   canEdit?: RoleUpdateManyWithoutEditPagesInput | null;
-  parent?: PageUpdateManyWithoutChildrenInput | null;
-  children?: PageUpdateManyWithoutParentInput | null;
+  parents?: PageUpdateManyWithoutChildrenInput | null;
+  children?: PageUpdateManyWithoutParentsInput | null;
 }
 
 export interface PageUpdateWithoutChildrenDataInput {
@@ -287,7 +288,7 @@ export interface PageUpdateWithoutChildrenDataInput {
   draftOwner?: UserUpdateOneWithoutDraftsInput | null;
   canView?: RoleUpdateManyWithoutViewPagesInput | null;
   canEdit?: RoleUpdateManyWithoutEditPagesInput | null;
-  parent?: PageUpdateManyWithoutChildrenInput | null;
+  parents?: PageUpdateManyWithoutChildrenInput | null;
 }
 
 export interface PageUpdateWithoutDraftOwnerDataInput {
@@ -298,11 +299,11 @@ export interface PageUpdateWithoutDraftOwnerDataInput {
   published?: boolean | null;
   canView?: RoleUpdateManyWithoutViewPagesInput | null;
   canEdit?: RoleUpdateManyWithoutEditPagesInput | null;
-  parent?: PageUpdateManyWithoutChildrenInput | null;
-  children?: PageUpdateManyWithoutParentInput | null;
+  parents?: PageUpdateManyWithoutChildrenInput | null;
+  children?: PageUpdateManyWithoutParentsInput | null;
 }
 
-export interface PageUpdateWithoutParentDataInput {
+export interface PageUpdateWithoutParentsDataInput {
   id?: string | null;
   title?: string | null;
   slug?: string | null;
@@ -311,7 +312,7 @@ export interface PageUpdateWithoutParentDataInput {
   draftOwner?: UserUpdateOneWithoutDraftsInput | null;
   canView?: RoleUpdateManyWithoutViewPagesInput | null;
   canEdit?: RoleUpdateManyWithoutEditPagesInput | null;
-  children?: PageUpdateManyWithoutParentInput | null;
+  children?: PageUpdateManyWithoutParentsInput | null;
 }
 
 export interface PageUpsertWithWhereUniqueWithoutCanEditInput {
@@ -338,23 +339,31 @@ export interface PageUpsertWithWhereUniqueWithoutDraftOwnerInput {
   create: PageCreateWithoutDraftOwnerInput;
 }
 
-export interface PageUpsertWithWhereUniqueWithoutParentInput {
+export interface PageUpsertWithWhereUniqueWithoutParentsInput {
   where: PageWhereUniqueInput;
-  update: PageUpdateWithoutParentDataInput;
-  create: PageCreateWithoutParentInput;
+  update: PageUpdateWithoutParentsDataInput;
+  create: PageCreateWithoutParentsInput;
+}
+
+export interface PageWhereInput {
+  id?: StringFilter | null;
+  title?: StringFilter | null;
+  slug?: StringFilter | null;
+  content?: NullableStringFilter | null;
+  published?: BooleanFilter | null;
+  canView?: RoleFilter | null;
+  canEdit?: RoleFilter | null;
+  parents?: PageFilter | null;
+  children?: PageFilter | null;
+  AND?: PageWhereInput[] | null;
+  OR?: PageWhereInput[] | null;
+  NOT?: PageWhereInput[] | null;
+  draftOwner?: UserWhereInput | null;
 }
 
 export interface PageWhereUniqueInput {
   id?: string | null;
   slug?: string | null;
-}
-
-export interface RoleCreateInput {
-  slug?: string | null;
-  locked?: boolean | null;
-  users?: UserCreateManyWithoutUsersInput | null;
-  viewPages?: PageCreateManyWithoutViewPagesInput | null;
-  editPages?: PageCreateManyWithoutEditPagesInput | null;
 }
 
 export interface RoleCreateManyWithoutCanEditInput {
@@ -393,13 +402,30 @@ export interface RoleCreateWithoutViewPagesInput {
   editPages?: PageCreateManyWithoutEditPagesInput | null;
 }
 
+export interface RoleFilter {
+  every?: RoleWhereInput | null;
+  some?: RoleWhereInput | null;
+  none?: RoleWhereInput | null;
+}
+
+export interface RoleScalarWhereInput {
+  slug?: StringFilter | null;
+  users?: UserFilter | null;
+  locked?: BooleanFilter | null;
+  viewPages?: PageFilter | null;
+  editPages?: PageFilter | null;
+  AND?: RoleScalarWhereInput[] | null;
+  OR?: RoleScalarWhereInput[] | null;
+  NOT?: RoleScalarWhereInput[] | null;
+}
+
 export interface RoleUpdateManyDataInput {
   slug?: string | null;
   locked?: boolean | null;
 }
 
 export interface RoleUpdateManyWithWhereNestedInput {
-  where: MutationUpdateOneUserWhereInput;
+  where: RoleScalarWhereInput;
   data: RoleUpdateManyDataInput;
 }
 
@@ -411,7 +437,7 @@ export interface RoleUpdateManyWithoutEditPagesInput {
   delete?: RoleWhereUniqueInput[] | null;
   update?: RoleUpdateWithWhereUniqueWithoutEditPagesInput[] | null;
   updateMany?: RoleUpdateManyWithWhereNestedInput[] | null;
-  deleteMany?: MutationUpsertOnePageWhereInput[] | null;
+  deleteMany?: RoleScalarWhereInput[] | null;
   upsert?: RoleUpsertWithWhereUniqueWithoutEditPagesInput[] | null;
 }
 
@@ -423,7 +449,7 @@ export interface RoleUpdateManyWithoutUsersInput {
   delete?: RoleWhereUniqueInput[] | null;
   update?: RoleUpdateWithWhereUniqueWithoutUsersInput[] | null;
   updateMany?: RoleUpdateManyWithWhereNestedInput[] | null;
-  deleteMany?: MutationUpdateOneUserWhereInput[] | null;
+  deleteMany?: RoleScalarWhereInput[] | null;
   upsert?: RoleUpsertWithWhereUniqueWithoutUsersInput[] | null;
 }
 
@@ -435,7 +461,7 @@ export interface RoleUpdateManyWithoutViewPagesInput {
   delete?: RoleWhereUniqueInput[] | null;
   update?: RoleUpdateWithWhereUniqueWithoutViewPagesInput[] | null;
   updateMany?: RoleUpdateManyWithWhereNestedInput[] | null;
-  deleteMany?: MutationUpsertOnePageWhereInput[] | null;
+  deleteMany?: RoleScalarWhereInput[] | null;
   upsert?: RoleUpsertWithWhereUniqueWithoutViewPagesInput[] | null;
 }
 
@@ -493,6 +519,17 @@ export interface RoleUpsertWithWhereUniqueWithoutViewPagesInput {
   create: RoleCreateWithoutViewPagesInput;
 }
 
+export interface RoleWhereInput {
+  slug?: StringFilter | null;
+  users?: UserFilter | null;
+  locked?: BooleanFilter | null;
+  viewPages?: PageFilter | null;
+  editPages?: PageFilter | null;
+  AND?: RoleWhereInput[] | null;
+  OR?: RoleWhereInput[] | null;
+  NOT?: RoleWhereInput[] | null;
+}
+
 export interface RoleWhereUniqueInput {
   slug?: string | null;
 }
@@ -509,14 +546,6 @@ export interface StringFilter {
   contains?: string | null;
   startsWith?: string | null;
   endsWith?: string | null;
-}
-
-export interface UserCreateInput {
-  id?: string | null;
-  email: string;
-  name?: string | null;
-  roles?: RoleCreateManyWithoutRolesInput | null;
-  drafts?: PageCreateManyWithoutDraftsInput | null;
 }
 
 export interface UserCreateManyWithoutUsersInput {
@@ -543,12 +572,21 @@ export interface UserCreateWithoutRolesInput {
   drafts?: PageCreateManyWithoutDraftsInput | null;
 }
 
-export interface UserUpdateInput {
-  id?: string | null;
-  email?: string | null;
-  name?: string | null;
-  roles?: RoleUpdateManyWithoutUsersInput | null;
-  drafts?: PageUpdateManyWithoutDraftOwnerInput | null;
+export interface UserFilter {
+  every?: UserWhereInput | null;
+  some?: UserWhereInput | null;
+  none?: UserWhereInput | null;
+}
+
+export interface UserScalarWhereInput {
+  id?: StringFilter | null;
+  email?: StringFilter | null;
+  name?: NullableStringFilter | null;
+  roles?: RoleFilter | null;
+  drafts?: PageFilter | null;
+  AND?: UserScalarWhereInput[] | null;
+  OR?: UserScalarWhereInput[] | null;
+  NOT?: UserScalarWhereInput[] | null;
 }
 
 export interface UserUpdateManyDataInput {
@@ -558,7 +596,7 @@ export interface UserUpdateManyDataInput {
 }
 
 export interface UserUpdateManyWithWhereNestedInput {
-  where: MutationUpsertOnePageWhereInput;
+  where: UserScalarWhereInput;
   data: UserUpdateManyDataInput;
 }
 
@@ -570,7 +608,7 @@ export interface UserUpdateManyWithoutRolesInput {
   delete?: UserWhereUniqueInput[] | null;
   update?: UserUpdateWithWhereUniqueWithoutRolesInput[] | null;
   updateMany?: UserUpdateManyWithWhereNestedInput[] | null;
-  deleteMany?: MutationUpsertOnePageWhereInput[] | null;
+  deleteMany?: UserScalarWhereInput[] | null;
   upsert?: UserUpsertWithWhereUniqueWithoutRolesInput[] | null;
 }
 
@@ -611,6 +649,17 @@ export interface UserUpsertWithWhereUniqueWithoutRolesInput {
 export interface UserUpsertWithoutDraftsInput {
   update: UserUpdateWithoutDraftsDataInput;
   create: UserCreateWithoutDraftsInput;
+}
+
+export interface UserWhereInput {
+  id?: StringFilter | null;
+  email?: StringFilter | null;
+  name?: NullableStringFilter | null;
+  roles?: RoleFilter | null;
+  drafts?: PageFilter | null;
+  AND?: UserWhereInput[] | null;
+  OR?: UserWhereInput[] | null;
+  NOT?: UserWhereInput[] | null;
 }
 
 export interface UserWhereUniqueInput {

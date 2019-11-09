@@ -1,5 +1,5 @@
 import { useApolloClient } from "@apollo/react-hooks";
-import { Button } from "@blueprintjs/core";
+import Button from "Components/Button";
 import gql from "graphql-tag";
 import decodeToken from "jwt-decode";
 import { useSimpleStore } from "Libs/simpleStore";
@@ -48,11 +48,7 @@ export default () => {
       <GoogleLogin
         clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID || ""}
         render={props => (
-          <Button
-            large
-            icon={<FaGoogle />}
-            onClick={() => props && props.onClick()}
-          >
+          <Button onClick={() => props && props.onClick()}>
             Login with Google
           </Button>
         )}

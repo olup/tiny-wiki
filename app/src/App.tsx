@@ -1,7 +1,4 @@
 import React, { useEffect } from "react";
-
-import "@blueprintjs/icons/lib/css/blueprint-icons.css";
-import "@blueprintjs/core/lib/css/blueprint.css";
 import Login from "Pages/Login";
 import { ApolloProvider } from "@apollo/react-hooks";
 import client from "Libs/apollo";
@@ -18,6 +15,10 @@ import { useSimpleStore } from "Libs/simpleStore";
 import { storeKeyNameFromField } from "apollo-utilities";
 
 const GlobalStyle = createGlobalStyle`
+  @import url('https://fonts.googleapis.com/css?family=PT+Mono&display=swap');
+  body {
+    font-family: 'PT Mono', monospace;
+  }
   a:hover {
     text-decoration : none;
   }

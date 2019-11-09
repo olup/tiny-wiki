@@ -6,11 +6,11 @@
 // GraphQL query operation: findManyRole
 // ====================================================
 
-export interface findManyRole_findManyRole {
+export interface findManyRole_roles {
   __typename: "Role";
   slug: string;
 }
 
 export interface findManyRole {
-  findManyRole: findManyRole_findManyRole[] | null;
+  roles: findManyRole_roles[];
 }

@@ -1,0 +1,373 @@
+{
+  "version": "0.3.14-fixed",
+  "steps": [
+    {
+      "stepType": "CreateModel",
+      "model": "User"
+    },
+    {
+      "stepType": "CreateField",
+      "model": "User",
+      "field": "id",
+      "type": "String",
+      "arity": "required"
+    },
+    {
+      "stepType": "CreateDirective",
+      "model": "User",
+      "field": "id",
+      "directive": "default"
+    },
+    {
+      "stepType": "CreateDirectiveArgument",
+      "model": "User",
+      "field": "id",
+      "directive": "default",
+      "argument": "",
+      "value": "cuid()"
+    },
+    {
+      "stepType": "CreateDirective",
+      "model": "User",
+      "field": "id",
+      "directive": "id"
+    },
+    {
+      "stepType": "CreateDirective",
+      "model": "User",
+      "field": "id",
+      "directive": "unique"
+    },
+    {
+      "stepType": "CreateField",
+      "model": "User",
+      "field": "email",
+      "type": "String",
+      "arity": "required"
+    },
+    {
+      "stepType": "CreateDirective",
+      "model": "User",
+      "field": "email",
+      "directive": "unique"
+    },
+    {
+      "stepType": "CreateField",
+      "model": "User",
+      "field": "name",
+      "type": "String",
+      "arity": "optional"
+    },
+    {
+      "stepType": "CreateField",
+      "model": "User",
+      "field": "roles",
+      "type": "Role",
+      "arity": "list"
+    },
+    {
+      "stepType": "CreateField",
+      "model": "User",
+      "field": "drafts",
+      "type": "Page",
+      "arity": "list"
+    },
+    {
+      "stepType": "CreateDirective",
+      "model": "User",
+      "field": "drafts",
+      "directive": "relation"
+    },
+    {
+      "stepType": "CreateDirectiveArgument",
+      "model": "User",
+      "field": "drafts",
+      "directive": "relation",
+      "argument": "name",
+      "value": "\"draftOwner\""
+    },
+    {
+      "stepType": "CreateModel",
+      "model": "Role"
+    },
+    {
+      "stepType": "CreateField",
+      "model": "Role",
+      "field": "slug",
+      "type": "String",
+      "arity": "required"
+    },
+    {
+      "stepType": "CreateDirective",
+      "model": "Role",
+      "field": "slug",
+      "directive": "default"
+    },
+    {
+      "stepType": "CreateDirectiveArgument",
+      "model": "Role",
+      "field": "slug",
+      "directive": "default",
+      "argument": "",
+      "value": "cuid()"
+    },
+    {
+      "stepType": "CreateDirective",
+      "model": "Role",
+      "field": "slug",
+      "directive": "id"
+    },
+    {
+      "stepType": "CreateDirective",
+      "model": "Role",
+      "field": "slug",
+      "directive": "unique"
+    },
+    {
+      "stepType": "CreateField",
+      "model": "Role",
+      "field": "users",
+      "type": "User",
+      "arity": "list"
+    },
+    {
+      "stepType": "CreateField",
+      "model": "Role",
+      "field": "locked",
+      "type": "Boolean",
+      "arity": "required"
+    },
+    {
+      "stepType": "CreateDirective",
+      "model": "Role",
+      "field": "locked",
+      "directive": "default"
+    },
+    {
+      "stepType": "CreateDirectiveArgument",
+      "model": "Role",
+      "field": "locked",
+      "directive": "default",
+      "argument": "",
+      "value": "false"
+    },
+    {
+      "stepType": "CreateField",
+      "model": "Role",
+      "field": "viewPages",
+      "type": "Page",
+      "arity": "list"
+    },
+    {
+      "stepType": "CreateDirective",
+      "model": "Role",
+      "field": "viewPages",
+      "directive": "relation"
+    },
+    {
+      "stepType": "CreateDirectiveArgument",
+      "model": "Role",
+      "field": "viewPages",
+      "directive": "relation",
+      "argument": "name",
+      "value": "\"users_can_view_pages\""
+    },
+    {
+      "stepType": "CreateField",
+      "model": "Role",
+      "field": "editPages",
+      "type": "Page",
+      "arity": "list"
+    },
+    {
+      "stepType": "CreateDirective",
+      "model": "Role",
+      "field": "editPages",
+      "directive": "relation"
+    },
+    {
+      "stepType": "CreateDirectiveArgument",
+      "model": "Role",
+      "field": "editPages",
+      "directive": "relation",
+      "argument": "name",
+      "value": "\"users_can_edit_pages\""
+    },
+    {
+      "stepType": "CreateModel",
+      "model": "Page"
+    },
+    {
+      "stepType": "CreateField",
+      "model": "Page",
+      "field": "id",
+      "type": "String",
+      "arity": "required"
+    },
+    {
+      "stepType": "CreateDirective",
+      "model": "Page",
+      "field": "id",
+      "directive": "default"
+    },
+    {
+      "stepType": "CreateDirectiveArgument",
+      "model": "Page",
+      "field": "id",
+      "directive": "default",
+      "argument": "",
+      "value": "cuid()"
+    },
+    {
+      "stepType": "CreateDirective",
+      "model": "Page",
+      "field": "id",
+      "directive": "id"
+    },
+    {
+      "stepType": "CreateDirective",
+      "model": "Page",
+      "field": "id",
+      "directive": "unique"
+    },
+    {
+      "stepType": "CreateField",
+      "model": "Page",
+      "field": "title",
+      "type": "String",
+      "arity": "required"
+    },
+    {
+      "stepType": "CreateField",
+      "model": "Page",
+      "field": "slug",
+      "type": "String",
+      "arity": "required"
+    },
+    {
+      "stepType": "CreateDirective",
+      "model": "Page",
+      "field": "slug",
+      "directive": "unique"
+    },
+    {
+      "stepType": "CreateField",
+      "model": "Page",
+      "field": "content",
+      "type": "String",
+      "arity": "optional"
+    },
+    {
+      "stepType": "CreateField",
+      "model": "Page",
+      "field": "published",
+      "type": "Boolean",
+      "arity": "required"
+    },
+    {
+      "stepType": "CreateField",
+      "model": "Page",
+      "field": "draftOwner",
+      "type": "User",
+      "arity": "optional"
+    },
+    {
+      "stepType": "CreateDirective",
+      "model": "Page",
+      "field": "draftOwner",
+      "directive": "relation"
+    },
+    {
+      "stepType": "CreateDirectiveArgument",
+      "model": "Page",
+      "field": "draftOwner",
+      "directive": "relation",
+      "argument": "name",
+      "value": "\"draftOwner\""
+    },
+    {
+      "stepType": "CreateField",
+      "model": "Page",
+      "field": "canView",
+      "type": "Role",
+      "arity": "list"
+    },
+    {
+      "stepType": "CreateDirective",
+      "model": "Page",
+      "field": "canView",
+      "directive": "relation"
+    },
+    {
+      "stepType": "CreateDirectiveArgument",
+      "model": "Page",
+      "field": "canView",
+      "directive": "relation",
+      "argument": "name",
+      "value": "\"users_can_view_pages\""
+    },
+    {
+      "stepType": "CreateField",
+      "model": "Page",
+      "field": "canEdit",
+      "type": "Role",
+      "arity": "list"
+    },
+    {
+      "stepType": "CreateDirective",
+      "model": "Page",
+      "field": "canEdit",
+      "directive": "relation"
+    },
+    {
+      "stepType": "CreateDirectiveArgument",
+      "model": "Page",
+      "field": "canEdit",
+      "directive": "relation",
+      "argument": "name",
+      "value": "\"users_can_edit_pages\""
+    },
+    {
+      "stepType": "CreateField",
+      "model": "Page",
+      "field": "parents",
+      "type": "Page",
+      "arity": "list"
+    },
+    {
+      "stepType": "CreateDirective",
+      "model": "Page",
+      "field": "parents",
+      "directive": "relation"
+    },
+    {
+      "stepType": "CreateDirectiveArgument",
+      "model": "Page",
+      "field": "parents",
+      "directive": "relation",
+      "argument": "",
+      "value": "\"Parents\""
+    },
+    {
+      "stepType": "CreateField",
+      "model": "Page",
+      "field": "children",
+      "type": "Page",
+      "arity": "list"
+    },
+    {
+      "stepType": "CreateDirective",
+      "model": "Page",
+      "field": "children",
+      "directive": "relation"
+    },
+    {
+      "stepType": "CreateDirectiveArgument",
+      "model": "Page",
+      "field": "children",
+      "directive": "relation",
+      "argument": "",
+      "value": "\"Parents\""
+    }
+  ]
+}

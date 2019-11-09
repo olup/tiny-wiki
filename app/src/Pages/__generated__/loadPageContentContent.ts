@@ -6,26 +6,27 @@
 // GraphQL query operation: loadPageContentContent
 // ====================================================
 
-export interface loadPageContentContent_findOnePage_draftOwner {
+export interface loadPageContentContent_page_draftOwner {
   __typename: "User";
   id: string;
 }
 
-export interface loadPageContentContent_findOnePage_canEdit {
+export interface loadPageContentContent_page_canEdit {
   __typename: "Role";
   slug: string;
 }
 
-export interface loadPageContentContent_findOnePage {
+export interface loadPageContentContent_page {
   __typename: "Page";
+  id: string;
   title: string;
   content: string | null;
-  draftOwner: loadPageContentContent_findOnePage_draftOwner | null;
-  canEdit: loadPageContentContent_findOnePage_canEdit[] | null;
+  draftOwner: loadPageContentContent_page_draftOwner | null;
+  canEdit: loadPageContentContent_page_canEdit[];
 }
 
 export interface loadPageContentContent {
-  findOnePage: loadPageContentContent_findOnePage | null;
+  page: loadPageContentContent_page | null;
 }
 
 export interface loadPageContentContentVariables {

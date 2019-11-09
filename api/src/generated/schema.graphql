@@ -18,43 +18,23 @@ type Mutation {
   upsertOnePage(create: PageCreateInput!, update: PageUpdateInput!, where: PageWhereUniqueInput!): Page!
 }
 
-input MutationUpdateOneUserFilter {
-  every: MutationUpdateOneUserWhereInput
-  none: MutationUpdateOneUserWhereInput
-  some: MutationUpdateOneUserWhereInput
-}
-
-input MutationUpdateOneUserWhereInput {
-  AND: [MutationUpdateOneUserWhereInput!]
-  editPages: MutationUpdateOneUserFilter
-  locked: BooleanFilter
-  NOT: [MutationUpdateOneUserWhereInput!]
-  OR: [MutationUpdateOneUserWhereInput!]
-  slug: StringFilter
-  users: MutationUpdateOneUserFilter
-  viewPages: MutationUpdateOneUserFilter
-}
-
-input MutationUpsertOnePageFilter {
-  every: MutationUpsertOnePageWhereInput
-  none: MutationUpsertOnePageWhereInput
-  some: MutationUpsertOnePageWhereInput
-}
-
-input MutationUpsertOnePageWhereInput {
-  AND: [MutationUpsertOnePageWhereInput!]
-  editPages: MutationUpsertOnePageFilter
-  locked: BooleanFilter
-  NOT: [MutationUpsertOnePageWhereInput!]
-  OR: [MutationUpsertOnePageWhereInput!]
-  slug: StringFilter
-  users: MutationUpsertOnePageFilter
-  viewPages: MutationUpsertOnePageFilter
+input NullableStringFilter {
+  contains: String
+  endsWith: String
+  equals: String
+  gt: String
+  gte: String
+  in: [String!]
+  lt: String
+  lte: String
+  not: String
+  notIn: [String!]
+  startsWith: String
 }
 
 type Page {
-  canEdit(after: String, before: String, first: Int, last: Int, skip: Int): [Role!]
-  canView(after: String, before: String, first: Int, last: Int, skip: Int): [Role!]
+  canEdit(after: ID, before: ID, first: Int, last: Int, skip: Int): [Role!]!
+  canView(after: ID, before: ID, first: Int, last: Int, skip: Int): [Role!]!
   content: String
   draftOwner: User
   id: ID!
@@ -69,7 +49,7 @@ input PageCreateInput {
   content: String
   draftOwner: UserCreateOneWithoutDraftOwnerInput
   id: ID
-  parent: PageCreateManyWithoutParentInput
+  parents: PageCreateManyWithoutParentsInput
   published: Boolean!
   slug: String!
   title: String!
@@ -77,7 +57,7 @@ input PageCreateInput {
 
 input PageCreateManyWithoutChildrenInput {
   connect: [PageWhereUniqueInput!]
-  create: [PageCreateWithoutParentInput!]
+  create: [PageCreateWithoutParentsInput!]
 }
 
 input PageCreateManyWithoutDraftsInput {
@@ -90,7 +70,7 @@ input PageCreateManyWithoutEditPagesInput {
   create: [PageCreateWithoutCanEditInput!]
 }
 
-input PageCreateManyWithoutParentInput {
+input PageCreateManyWithoutParentsInput {
   connect: [PageWhereUniqueInput!]
   create: [PageCreateWithoutChildrenInput!]
 }
@@ -106,7 +86,7 @@ input PageCreateWithoutCanEditInput {
   content: String
   draftOwner: UserCreateOneWithoutDraftOwnerInput
   id: ID
-  parent: PageCreateManyWithoutParentInput
+  parents: PageCreateManyWithoutParentsInput
   published: Boolean!
   slug: String!
   title: String!
@@ -118,7 +98,7 @@ input PageCreateWithoutCanViewInput {
   content: String
   draftOwner: UserCreateOneWithoutDraftOwnerInput
   id: ID
-  parent: PageCreateManyWithoutParentInput
+  parents: PageCreateManyWithoutParentsInput
   published: Boolean!
   slug: String!
   title: String!
@@ -130,7 +110,7 @@ input PageCreateWithoutChildrenInput {
   content: String
   draftOwner: UserCreateOneWithoutDraftOwnerInput
   id: ID
-  parent: PageCreateManyWithoutParentInput
+  parents: PageCreateManyWithoutParentsInput
   published: Boolean!
   slug: String!
   title: String!
@@ -142,13 +122,13 @@ input PageCreateWithoutDraftOwnerInput {
   children: PageCreateManyWithoutChildrenInput
   content: String
   id: ID
-  parent: PageCreateManyWithoutParentInput
+  parents: PageCreateManyWithoutParentsInput
   published: Boolean!
   slug: String!
   title: String!
 }
 
-input PageCreateWithoutParentInput {
+input PageCreateWithoutParentsInput {
   canEdit: RoleCreateManyWithoutCanEditInput
   canView: RoleCreateManyWithoutCanViewInput
   children: PageCreateManyWithoutChildrenInput
@@ -160,14 +140,35 @@ input PageCreateWithoutParentInput {
   title: String!
 }
 
+input PageFilter {
+  every: PageWhereInput
+  none: PageWhereInput
+  some: PageWhereInput
+}
+
+input PageScalarWhereInput {
+  AND: [PageScalarWhereInput!]
+  canEdit: RoleFilter
+  canView: RoleFilter
+  children: PageFilter
+  content: NullableStringFilter
+  id: StringFilter
+  NOT: [PageScalarWhereInput!]
+  OR: [PageScalarWhereInput!]
+  parents: PageFilter
+  published: BooleanFilter
+  slug: StringFilter
+  title: StringFilter
+}
+
 input PageUpdateInput {
   canEdit: RoleUpdateManyWithoutEditPagesInput
   canView: RoleUpdateManyWithoutViewPagesInput
-  children: PageUpdateManyWithoutParentInput
+  children: PageUpdateManyWithoutParentsInput
   content: String
   draftOwner: UserUpdateOneWithoutDraftsInput
   id: ID
-  parent: PageUpdateManyWithoutChildrenInput
+  parents: PageUpdateManyWithoutChildrenInput
   published: Boolean
   slug: String
   title: String
@@ -185,7 +186,7 @@ input PageUpdateManyWithoutCanEditInput {
   connect: [PageWhereUniqueInput!]
   create: [PageCreateWithoutCanEditInput!]
   delete: [PageWhereUniqueInput!]
-  deleteMany: [MutationUpdateOneUserWhereInput!]
+  deleteMany: [PageScalarWhereInput!]
   disconnect: [PageWhereUniqueInput!]
   set: [PageWhereUniqueInput!]
   update: [PageUpdateWithWhereUniqueWithoutCanEditInput!]
@@ -197,7 +198,7 @@ input PageUpdateManyWithoutCanViewInput {
   connect: [PageWhereUniqueInput!]
   create: [PageCreateWithoutCanViewInput!]
   delete: [PageWhereUniqueInput!]
-  deleteMany: [MutationUpdateOneUserWhereInput!]
+  deleteMany: [PageScalarWhereInput!]
   disconnect: [PageWhereUniqueInput!]
   set: [PageWhereUniqueInput!]
   update: [PageUpdateWithWhereUniqueWithoutCanViewInput!]
@@ -209,7 +210,7 @@ input PageUpdateManyWithoutChildrenInput {
   connect: [PageWhereUniqueInput!]
   create: [PageCreateWithoutChildrenInput!]
   delete: [PageWhereUniqueInput!]
-  deleteMany: [MutationUpsertOnePageWhereInput!]
+  deleteMany: [PageScalarWhereInput!]
   disconnect: [PageWhereUniqueInput!]
   set: [PageWhereUniqueInput!]
   update: [PageUpdateWithWhereUniqueWithoutChildrenInput!]
@@ -221,7 +222,7 @@ input PageUpdateManyWithoutDraftOwnerInput {
   connect: [PageWhereUniqueInput!]
   create: [PageCreateWithoutDraftOwnerInput!]
   delete: [PageWhereUniqueInput!]
-  deleteMany: [MutationUpdateOneUserWhereInput!]
+  deleteMany: [PageScalarWhereInput!]
   disconnect: [PageWhereUniqueInput!]
   set: [PageWhereUniqueInput!]
   update: [PageUpdateWithWhereUniqueWithoutDraftOwnerInput!]
@@ -229,30 +230,30 @@ input PageUpdateManyWithoutDraftOwnerInput {
   upsert: [PageUpsertWithWhereUniqueWithoutDraftOwnerInput!]
 }
 
-input PageUpdateManyWithoutParentInput {
+input PageUpdateManyWithoutParentsInput {
   connect: [PageWhereUniqueInput!]
-  create: [PageCreateWithoutParentInput!]
+  create: [PageCreateWithoutParentsInput!]
   delete: [PageWhereUniqueInput!]
-  deleteMany: [MutationUpsertOnePageWhereInput!]
+  deleteMany: [PageScalarWhereInput!]
   disconnect: [PageWhereUniqueInput!]
   set: [PageWhereUniqueInput!]
-  update: [PageUpdateWithWhereUniqueWithoutParentInput!]
+  update: [PageUpdateWithWhereUniqueWithoutParentsInput!]
   updateMany: [PageUpdateManyWithWhereNestedInput!]
-  upsert: [PageUpsertWithWhereUniqueWithoutParentInput!]
+  upsert: [PageUpsertWithWhereUniqueWithoutParentsInput!]
 }
 
 input PageUpdateManyWithWhereNestedInput {
   data: PageUpdateManyDataInput!
-  where: MutationUpdateOneUserWhereInput!
+  where: PageScalarWhereInput!
 }
 
 input PageUpdateWithoutCanEditDataInput {
   canView: RoleUpdateManyWithoutViewPagesInput
-  children: PageUpdateManyWithoutParentInput
+  children: PageUpdateManyWithoutParentsInput
   content: String
   draftOwner: UserUpdateOneWithoutDraftsInput
   id: ID
-  parent: PageUpdateManyWithoutChildrenInput
+  parents: PageUpdateManyWithoutChildrenInput
   published: Boolean
   slug: String
   title: String
@@ -260,11 +261,11 @@ input PageUpdateWithoutCanEditDataInput {
 
 input PageUpdateWithoutCanViewDataInput {
   canEdit: RoleUpdateManyWithoutEditPagesInput
-  children: PageUpdateManyWithoutParentInput
+  children: PageUpdateManyWithoutParentsInput
   content: String
   draftOwner: UserUpdateOneWithoutDraftsInput
   id: ID
-  parent: PageUpdateManyWithoutChildrenInput
+  parents: PageUpdateManyWithoutChildrenInput
   published: Boolean
   slug: String
   title: String
@@ -276,7 +277,7 @@ input PageUpdateWithoutChildrenDataInput {
   content: String
   draftOwner: UserUpdateOneWithoutDraftsInput
   id: ID
-  parent: PageUpdateManyWithoutChildrenInput
+  parents: PageUpdateManyWithoutChildrenInput
   published: Boolean
   slug: String
   title: String
@@ -285,19 +286,19 @@ input PageUpdateWithoutChildrenDataInput {
 input PageUpdateWithoutDraftOwnerDataInput {
   canEdit: RoleUpdateManyWithoutEditPagesInput
   canView: RoleUpdateManyWithoutViewPagesInput
-  children: PageUpdateManyWithoutParentInput
+  children: PageUpdateManyWithoutParentsInput
   content: String
   id: ID
-  parent: PageUpdateManyWithoutChildrenInput
+  parents: PageUpdateManyWithoutChildrenInput
   published: Boolean
   slug: String
   title: String
 }
 
-input PageUpdateWithoutParentDataInput {
+input PageUpdateWithoutParentsDataInput {
   canEdit: RoleUpdateManyWithoutEditPagesInput
   canView: RoleUpdateManyWithoutViewPagesInput
-  children: PageUpdateManyWithoutParentInput
+  children: PageUpdateManyWithoutParentsInput
   content: String
   draftOwner: UserUpdateOneWithoutDraftsInput
   id: ID
@@ -326,8 +327,8 @@ input PageUpdateWithWhereUniqueWithoutDraftOwnerInput {
   where: PageWhereUniqueInput!
 }
 
-input PageUpdateWithWhereUniqueWithoutParentInput {
-  data: PageUpdateWithoutParentDataInput!
+input PageUpdateWithWhereUniqueWithoutParentsInput {
+  data: PageUpdateWithoutParentsDataInput!
   where: PageWhereUniqueInput!
 }
 
@@ -355,10 +356,26 @@ input PageUpsertWithWhereUniqueWithoutDraftOwnerInput {
   where: PageWhereUniqueInput!
 }
 
-input PageUpsertWithWhereUniqueWithoutParentInput {
-  create: PageCreateWithoutParentInput!
-  update: PageUpdateWithoutParentDataInput!
+input PageUpsertWithWhereUniqueWithoutParentsInput {
+  create: PageCreateWithoutParentsInput!
+  update: PageUpdateWithoutParentsDataInput!
   where: PageWhereUniqueInput!
+}
+
+input PageWhereInput {
+  AND: [PageWhereInput!]
+  canEdit: RoleFilter
+  canView: RoleFilter
+  children: PageFilter
+  content: NullableStringFilter
+  draftOwner: UserWhereInput
+  id: StringFilter
+  NOT: [PageWhereInput!]
+  OR: [PageWhereInput!]
+  parents: PageFilter
+  published: BooleanFilter
+  slug: StringFilter
+  title: StringFilter
 }
 
 input PageWhereUniqueInput {
@@ -367,10 +384,11 @@ input PageWhereUniqueInput {
 }
 
 type Query {
-  findManyRole(after: String, before: String, first: Int, last: Int, skip: Int): [Role!]
-  findManyUser(after: String, before: String, first: Int, last: Int, skip: Int): [User!]
-  findOnePage(where: PageWhereUniqueInput!): Page
   listPages: [Page!]!
+  page(where: PageWhereUniqueInput!): Page
+  pages(after: ID, before: ID, first: Int, last: Int, skip: Int, where: PageWhereInput): [Page!]!
+  roles(after: ID, before: ID, first: Int, last: Int, skip: Int): [Role!]!
+  users(after: ID, before: ID, first: Int, last: Int, skip: Int): [User!]!
 }
 
 type Role {
@@ -422,6 +440,23 @@ input RoleCreateWithoutViewPagesInput {
   users: UserCreateManyWithoutUsersInput
 }
 
+input RoleFilter {
+  every: RoleWhereInput
+  none: RoleWhereInput
+  some: RoleWhereInput
+}
+
+input RoleScalarWhereInput {
+  AND: [RoleScalarWhereInput!]
+  editPages: PageFilter
+  locked: BooleanFilter
+  NOT: [RoleScalarWhereInput!]
+  OR: [RoleScalarWhereInput!]
+  slug: StringFilter
+  users: UserFilter
+  viewPages: PageFilter
+}
+
 input RoleUpdateManyDataInput {
   locked: Boolean
   slug: ID
@@ -431,7 +466,7 @@ input RoleUpdateManyWithoutEditPagesInput {
   connect: [RoleWhereUniqueInput!]
   create: [RoleCreateWithoutEditPagesInput!]
   delete: [RoleWhereUniqueInput!]
-  deleteMany: [MutationUpsertOnePageWhereInput!]
+  deleteMany: [RoleScalarWhereInput!]
   disconnect: [RoleWhereUniqueInput!]
   set: [RoleWhereUniqueInput!]
   update: [RoleUpdateWithWhereUniqueWithoutEditPagesInput!]
@@ -443,7 +478,7 @@ input RoleUpdateManyWithoutUsersInput {
   connect: [RoleWhereUniqueInput!]
   create: [RoleCreateWithoutUsersInput!]
   delete: [RoleWhereUniqueInput!]
-  deleteMany: [MutationUpdateOneUserWhereInput!]
+  deleteMany: [RoleScalarWhereInput!]
   disconnect: [RoleWhereUniqueInput!]
   set: [RoleWhereUniqueInput!]
   update: [RoleUpdateWithWhereUniqueWithoutUsersInput!]
@@ -455,7 +490,7 @@ input RoleUpdateManyWithoutViewPagesInput {
   connect: [RoleWhereUniqueInput!]
   create: [RoleCreateWithoutViewPagesInput!]
   delete: [RoleWhereUniqueInput!]
-  deleteMany: [MutationUpsertOnePageWhereInput!]
+  deleteMany: [RoleScalarWhereInput!]
   disconnect: [RoleWhereUniqueInput!]
   set: [RoleWhereUniqueInput!]
   update: [RoleUpdateWithWhereUniqueWithoutViewPagesInput!]
@@ -465,7 +500,7 @@ input RoleUpdateManyWithoutViewPagesInput {
 
 input RoleUpdateManyWithWhereNestedInput {
   data: RoleUpdateManyDataInput!
-  where: MutationUpdateOneUserWhereInput!
+  where: RoleScalarWhereInput!
 }
 
 input RoleUpdateWithoutEditPagesDataInput {
@@ -522,6 +557,17 @@ input RoleUpsertWithWhereUniqueWithoutViewPagesInput {
   where: RoleWhereUniqueInput!
 }
 
+input RoleWhereInput {
+  AND: [RoleWhereInput!]
+  editPages: PageFilter
+  locked: BooleanFilter
+  NOT: [RoleWhereInput!]
+  OR: [RoleWhereInput!]
+  slug: StringFilter
+  users: UserFilter
+  viewPages: PageFilter
+}
+
 input RoleWhereUniqueInput {
   slug: ID
 }
@@ -543,7 +589,7 @@ input StringFilter {
 type User {
   email: String!
   id: ID!
-  roles(after: String, before: String, first: Int, last: Int, skip: Int): [Role!]
+  roles(after: ID, before: ID, first: Int, last: Int, skip: Int): [Role!]!
 }
 
 input UserCreateInput {
@@ -578,6 +624,23 @@ input UserCreateWithoutRolesInput {
   name: String
 }
 
+input UserFilter {
+  every: UserWhereInput
+  none: UserWhereInput
+  some: UserWhereInput
+}
+
+input UserScalarWhereInput {
+  AND: [UserScalarWhereInput!]
+  drafts: PageFilter
+  email: StringFilter
+  id: StringFilter
+  name: NullableStringFilter
+  NOT: [UserScalarWhereInput!]
+  OR: [UserScalarWhereInput!]
+  roles: RoleFilter
+}
+
 input UserUpdateInput {
   drafts: PageUpdateManyWithoutDraftOwnerInput
   email: String
@@ -596,7 +659,7 @@ input UserUpdateManyWithoutRolesInput {
   connect: [UserWhereUniqueInput!]
   create: [UserCreateWithoutRolesInput!]
   delete: [UserWhereUniqueInput!]
-  deleteMany: [MutationUpsertOnePageWhereInput!]
+  deleteMany: [UserScalarWhereInput!]
   disconnect: [UserWhereUniqueInput!]
   set: [UserWhereUniqueInput!]
   update: [UserUpdateWithWhereUniqueWithoutRolesInput!]
@@ -606,7 +669,7 @@ input UserUpdateManyWithoutRolesInput {
 
 input UserUpdateManyWithWhereNestedInput {
   data: UserUpdateManyDataInput!
-  where: MutationUpsertOnePageWhereInput!
+  where: UserScalarWhereInput!
 }
 
 input UserUpdateOneWithoutDraftsInput {
@@ -646,6 +709,17 @@ input UserUpsertWithWhereUniqueWithoutRolesInput {
   create: UserCreateWithoutRolesInput!
   update: UserUpdateWithoutRolesDataInput!
   where: UserWhereUniqueInput!
+}
+
+input UserWhereInput {
+  AND: [UserWhereInput!]
+  drafts: PageFilter
+  email: StringFilter
+  id: StringFilter
+  name: NullableStringFilter
+  NOT: [UserWhereInput!]
+  OR: [UserWhereInput!]
+  roles: RoleFilter
 }
 
 input UserWhereUniqueInput {

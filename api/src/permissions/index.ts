@@ -59,26 +59,27 @@ const rules = {
 
 export default shield({
   Query: {
-    "*": rules.isAuthenticatedUser
+    "*": allow //rules.isAuthenticatedUser
   },
   Mutation: {
     loginWithGoogleToken: allow,
+    "*": allow //rules.isAuthenticatedUser
 
-    createOneRole: and(rules.isAuthenticatedUser, rules.isAdmin),
-    deleteOneRole: and(
-      rules.isAuthenticatedUser,
-      rules.isAdmin,
-      rules.roleIsEditable
-    ),
+    // createOneRole: and(rules.isAuthenticatedUser, rules.isAdmin),
+    // deleteOneRole: and(
+    //   rules.isAuthenticatedUser,
+    //   rules.isAdmin,
+    //   rules.roleIsEditable
+    // ),
 
-    upsertOnePage: and(
-      rules.isAuthenticatedUser,
-      or(rules.isAdmin, rules.canEditPage, rules.isPageOwner)
-    ),
-    deleteOnePage: and(
-      rules.isAuthenticatedUser,
-      or(rules.isAdmin, rules.canEditPage, rules.isPageOwner)
-    )
+    // upsertOnePage: and(
+    //   rules.isAuthenticatedUser,
+    //   or(rules.isAdmin, rules.canEditPage, rules.isPageOwner)
+    // ),
+    // deleteOnePage: and(
+    //   rules.isAuthenticatedUser,
+    //   or(rules.isAdmin, rules.canEditPage, rules.isPageOwner)
+    // )
   }
 
   // Page: and(rules.isAuthenticatedUser, or(rules.isAdmin, rules.canViewPage))

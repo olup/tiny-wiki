@@ -1,12 +1,12 @@
 import { createContextStore, action, Action } from "easy-peasy";
-import { loadPage_findOnePage } from "./__generated__/loadPage";
+import { loadPage_page } from "./__generated__/loadPage";
 
 interface PageStateModel {
-  page: Partial<loadPage_findOnePage> | null;
+  page: Partial<loadPage_page> | null;
   isNew: boolean;
   loading: boolean;
 
-  updatePage: Action<PageStateModel, Partial<loadPage_findOnePage>>;
+  updatePage: Action<PageStateModel, Partial<loadPage_page>>;
   setIsNew: Action<PageStateModel, boolean>;
   setLoading: Action<PageStateModel, boolean>;
 }

@@ -1,32 +1,24 @@
 import React from "react";
 import styled from "styled-components";
-import { H1, Button } from "@blueprintjs/core";
 import gql from "graphql-tag";
-import { match } from "react-router";
-
+import useRouter from "use-react-router";
+import Button from "Components/Button";
 import { useQuery } from "@apollo/react-hooks";
 import { Link } from "react-router-dom";
 import {
   loadPageContentContent,
   loadPageContentContentVariables
 } from "./__generated__/loadPageContentContent";
-import showdown from "showdown";
+import ReactMarkdown from "react-markdown";
 import MarkdownRenderer from "Components/MarkdownRenderer";
-import { canEditPage, slugs } from "Utils/permissions";
+import { canEditPage } from "Utils/permissions";
 import { useSimpleStore } from "Libs/simpleStore";
-
-const mark = new showdown.Converter();
-mark.setFlavor("github");
 
 const StyledMd = styled(MarkdownRenderer)``;
 
-type PageProps = {
-  match: match<{ slug: string }>;
-};
-
 const LOAD_PAGE = gql`
   query loadPageContentContent($slug: String!) {
-    findOnePage(where: { slug: $slug }) {
+    page(where: { slug: $slug }) {
       id
       title
       content
@@ -51,35 +43,59 @@ const Content = styled.div`
   }
 `;
 
-export default ({ match }: PageProps) => {
+export default () => {
+  const match = useRouter<{ slug: string }>().match.params;
+  console.log(match);
+  const slug = (match && match.slug) || "";
+
   const { data, loading, error } = useQuery<
     loadPageContentContent,
     loadPageContentContentVariables
   >(LOAD_PAGE, {
-    variables: { slug: match.params.slug }
+    variables: { slug }
   });
+
   if (error) console.log(error);
-  const page = data && data.findOnePage;
+
+  const page = !error && data && data.page;
+
   const { roles, user } = useSimpleStore();
-  if (!page || loading) return null;
+
+  if (!page) {
+    if (loading) return null;
+    return (
+      <div>
+        La page <b>{slug}</b> n'existe pas. Voulez-vous la{" "}
+        <Link to={`/page/${slug}/edit`}>
+          <Button>créer</Button>
+        </Link>{" "}
+        ?
+      </div>
+    );
+  }
+
   return (
     <div style={{ maxWidth: 768, margin: "0 auto" }}>
       {canEditPage(user, roles, page) && (
         <TopBar>
-          <Link to={`/page/${match.params.slug}/edit`}>
-            <Button icon="edit" minimal>
-              Editer
-            </Button>
+          <Link to={`/page/${slug}/edit`}>
+            <Button>Edit</Button>
           </Link>
         </TopBar>
       )}
       <Content>
         <h1 className="title">{page.title}</h1>
-        <StyledMd
-          dangerouslySetInnerHTML={{
-            __html: mark.makeHtml(page.content || "")
-          }}
-        />
+        <StyledMd>
+          <ReactMarkdown
+            source={page.content || undefined}
+            renderers={{
+              link: args => {
+                const href = args.href.replace("@", "/page/");
+                return <Link to={href}>{args.children}</Link>;
+              }
+            }}
+          />
+        </StyledMd>
       </Content>
     </div>
   );

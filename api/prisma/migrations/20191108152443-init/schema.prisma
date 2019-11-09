@@ -1,6 +1,6 @@
 datasource db {
   provider = "sqlite"
-  url      = "file:../db/dev.db"
+  url = "***"
   default  = true
 }
 
@@ -40,6 +40,6 @@ model Page {
   canView Role[] @relation(name: "users_can_view_pages")
   canEdit Role[] @relation(name: "users_can_edit_pages")
 
-  parent   Page[]
-  children Page[]
+  parents  Page[] @relation("Parents")
+  children Page[] @relation("Parents")
 }

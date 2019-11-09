@@ -6,28 +6,28 @@
 // GraphQL query operation: loadPage
 // ====================================================
 
-export interface loadPage_findOnePage_canView {
+export interface loadPage_page_canView {
   __typename: "Role";
   slug: string;
 }
 
-export interface loadPage_findOnePage_canEdit {
+export interface loadPage_page_canEdit {
   __typename: "Role";
   slug: string;
 }
 
-export interface loadPage_findOnePage {
+export interface loadPage_page {
   __typename: "Page";
   id: string;
   slug: string;
   title: string;
   content: string | null;
-  canView: loadPage_findOnePage_canView[] | null;
-  canEdit: loadPage_findOnePage_canEdit[] | null;
+  canView: loadPage_page_canView[];
+  canEdit: loadPage_page_canEdit[];
 }
 
 export interface loadPage {
-  findOnePage: loadPage_findOnePage | null;
+  page: loadPage_page | null;
 }
 
 export interface loadPageVariables {

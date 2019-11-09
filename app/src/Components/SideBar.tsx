@@ -2,13 +2,11 @@ import React from "react";
 import styled from "styled-components";
 import gql from "graphql-tag";
 import { NavLink, Link } from "react-router-dom";
-import { Button } from "@blueprintjs/core";
+import Button from "Components/Button";
 import { getPagesSideBar } from "./__generated__/getPagesSideBar";
 import { useQuery } from "@apollo/react-hooks";
 import { useSimpleStore } from "Libs/simpleStore";
 import { GoFile } from "react-icons/go";
-import { FaPowerOff } from "react-icons/fa";
-import { GET_ROLES } from "Pages/Edit/queries";
 
 const SideBar = styled.div`
   width: 350px;
@@ -73,22 +71,22 @@ export default () => {
           </NavItem>
         ))}
         <NavSection>
-          <Link to={`/page/create`}>
-            <Button minimal icon="plus">
-              Add Page
-            </Button>
+          <Link to={`/create-page`}>
+            <div style={{ marginBottom: 10 }}>
+              <Button>Add Page</Button>
+            </div>
           </Link>
           {roles.includes("admin") && (
             <Link to={`/settings`}>
-              <Button minimal icon="cog">
-                Settings
-              </Button>
+              <div style={{ marginBottom: 10 }}>
+                <Button>Settings</Button>
+              </div>
             </Link>
           )}
           <Link to={`/logout`}>
-            <Button minimal icon={<FaPowerOff color="#5c7080" />}>
-              Log out
-            </Button>
+            <div>
+              <Button>Log out</Button>
+            </div>
           </Link>
         </NavSection>
       </div>
