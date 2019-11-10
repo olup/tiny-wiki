@@ -12,16 +12,24 @@ import Home from "Pages/Home";
 import { createGlobalStyle } from "styled-components";
 import decodeToken from "jwt-decode";
 import { useSimpleStore } from "Libs/simpleStore";
-import { storeKeyNameFromField } from "apollo-utilities";
 
 const GlobalStyle = createGlobalStyle`
   @import url('https://fonts.googleapis.com/css?family=PT+Mono&display=swap');
   body {
-    font-family: 'PT Mono', monospace;
+    font-family: 'PT Mono', monospace; 
+     h1 {
+      font-size : 50px;
+      margin-bottom : 20px;
+    }
+    h2 {
+      font-size : 30px;
+      margin-bottom : 10px;
+    }
+    a {
+      text-decoration : none;
+    }
   }
-  a:hover {
-    text-decoration : none;
-  }
+
 `;
 
 const App: React.FC = () => {

@@ -7,6 +7,7 @@ import { getPagesSideBar } from "./__generated__/getPagesSideBar";
 import { useQuery } from "@apollo/react-hooks";
 import { useSimpleStore } from "Libs/simpleStore";
 import { GoFile } from "react-icons/go";
+import SearchBar from "Components/SearchBar";
 
 const SideBar = styled.div`
   width: 350px;
@@ -26,6 +27,7 @@ const NavHeader = styled.div`
     color: #eee;
     background: #222;
     border-radius: 3px;
+    font-size: 20px;
   }
 `;
 
@@ -64,6 +66,7 @@ export default () => {
       <NavHeader>
         <h1>Tiny Wiki</h1>
       </NavHeader>
+      <SearchBar />
       <div>
         {pages.map(page => (
           <NavItem key={page.slug} to={`/page/${page.slug}`}>

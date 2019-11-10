@@ -1,10 +1,8 @@
 import { useQuery, useApolloClient, useMutation } from "@apollo/react-hooks";
 import Button from "Components/Button";
 import React from "react";
-import { Link } from "react-router-dom";
 import styled from "styled-components";
-import useRouter from "use-react-router";
-import { useRouteMatch } from "react-router";
+import { useRouteMatch, useHistory } from "react-router";
 import Editor from "./Editor";
 import { LOAD_PAGE, GET_PAGES, DELETE_PAGE, SAVE_PAGE } from "./queries";
 import { PageState } from "./store";
@@ -80,7 +78,7 @@ const PageWrapper = () => {
 };
 
 const useMethodsHook = () => {
-  const { history } = useRouter();
+  const history = useHistory();
   const page = PageState.useStoreState(state => state.page);
   const isNew = PageState.useStoreState(state => state.isNew);
   const simpleStore = useSimpleStore();

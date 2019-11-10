@@ -1,5 +1,5 @@
 import photon from "../libs/photon";
-import { objectType } from "nexus";
+import { objectType, stringArg } from "nexus";
 
 export const Query = objectType({
   name: "Query",

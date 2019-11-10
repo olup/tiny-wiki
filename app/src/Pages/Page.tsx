@@ -38,9 +38,6 @@ const TopBar = styled.div`
 
 const Content = styled.div`
   line-height: 1.8;
-  .title {
-    font-size: 50px;
-  }
 `;
 
 export default () => {

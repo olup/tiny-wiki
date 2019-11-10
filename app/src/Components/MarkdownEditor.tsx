@@ -15,7 +15,7 @@ const SEARCH_PAGES = gql`
     pages(
       where: {
         title: { contains: $search }
-        OR: { slug: { contains: $search } }
+        OR: [{ slug: { contains: $search } }, { title: { contains: $search } }]
       }
     ) {
       title
