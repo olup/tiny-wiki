@@ -13,6 +13,7 @@ import ReactMarkdown from "react-markdown";
 import MarkdownRenderer from "Components/MarkdownRenderer";
 import { canEditPage } from "Utils/permissions";
 import { useSimpleStore } from "Libs/simpleStore";
+import PageContainer from "Components/PageContainer";
 
 const StyledMd = styled(MarkdownRenderer)``;
 
@@ -72,7 +73,7 @@ export default () => {
   }
 
   return (
-    <div style={{ maxWidth: 768, margin: "0 auto" }}>
+    <PageContainer>
       {canEditPage(user, roles, page) && (
         <TopBar>
           <Link to={`/page/${slug}/edit`}>
@@ -94,6 +95,6 @@ export default () => {
           />
         </StyledMd>
       </Content>
-    </div>
+    </PageContainer>
   );
 };

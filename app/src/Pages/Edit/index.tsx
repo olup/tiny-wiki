@@ -14,6 +14,7 @@ import {
   loadPageContentContent,
   loadPageContentContentVariables
 } from "Pages/__generated__/loadPageContentContent";
+import PageContainer from "Components/PageContainer";
 
 const TopBar = styled.div`
   margin-bottom: 20px;
@@ -67,13 +68,13 @@ const PageWrapper = () => {
 
   if (loading) return null;
   return (
-    <div style={{ maxWidth: 768, margin: "0 auto" }}>
+    <PageContainer>
       <TopBar>
         <Button onClick={onSave}>Save</Button>
         {!isNew && <Button onClick={onDelete}>Delete</Button>}
       </TopBar>
       <Editor />
-    </div>
+    </PageContainer>
   );
 };
 

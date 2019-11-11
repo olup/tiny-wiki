@@ -13,6 +13,7 @@ import {
   settingsDeleteUSersVariables,
   settingsDeleteUSers
 } from "./__generated__/settingsDeleteUSers";
+import PageContainer from "Components/PageContainer";
 
 const GET_USERS = gql`
   query settingsGetUSers {
@@ -94,7 +95,7 @@ export default () => {
   };
 
   return (
-    <div style={{ maxWidth: 768, margin: "0 auto" }}>
+    <PageContainer>
       <h1>Settings</h1>
       <h2>Users</h2>
       {users.map(user => (
@@ -107,6 +108,6 @@ export default () => {
         <Button onClick={() => setShowAddUser(true)}>Add user</Button>
       )}
       {showAddUser && <AddUser onClose={onUserAdded} />}
-    </div>
+    </PageContainer>
   );
 };

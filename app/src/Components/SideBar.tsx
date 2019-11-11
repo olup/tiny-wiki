@@ -10,7 +10,7 @@ import { GoFile } from "react-icons/go";
 import SearchBar from "Components/SearchBar";
 
 const SideBar = styled.div`
-  width: 350px;
+  width: 300px;
   background-color: #f4f5f4;
 `;
 
@@ -28,6 +28,7 @@ const NavHeader = styled.div`
     background: #222;
     border-radius: 3px;
     font-size: 20px;
+    margin-bottom: 0;
   }
 `;
 
@@ -35,7 +36,7 @@ const NavItem = styled(NavLink)`
   display: flex;
   align-items: center;
   padding: 10px 30px;
-  font-size: 19px;
+  font-size: 16px;
   color: #464646;
   cursor: pointer;
   &:hover,

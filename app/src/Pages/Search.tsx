@@ -8,6 +8,9 @@ import {
 } from "./__generated__/searchPageSearchPages";
 import { useQuery } from "@apollo/react-hooks";
 import { Link } from "react-router-dom";
+import ReactMarkdown from "react-markdown";
+import MarkdownRenderer from "Components/MarkdownRenderer";
+import PageContainer from "Components/PageContainer";
 
 const SEARCH_PAGES = gql`
   query searchPageSearchPages($search: String!) {
@@ -27,6 +30,15 @@ const SEARCH_PAGES = gql`
   }
 `;
 
+const PageListItem = styled.div`
+  padding: 10px;
+  border: 1px solid #eee;
+  margin-bottom: 10px;
+  &:hover {
+    border-color: #ccc;
+  }
+`;
+
 export default () => {
   const match = useRouteMatch<{ searchString: string }>({
     path: "/search/:searchString"
@@ -40,13 +52,29 @@ export default () => {
   });
   const pages = (data && data.pages) || [];
   return (
-    <div style={{ maxWidth: 768, margin: "0 auto" }}>
+    <PageContainer>
       <h1>Search : {search}</h1>
       {pages.map(page => (
         <Link to={`/page/${page.slug}`}>
-          <h2>{page.title}</h2>
+          <PageListItem>
+            <h2>{page.title}</h2>
+            <MarkdownRenderer>
+              <ReactMarkdown
+                source={
+                  (page.content && page.content.split("\n")[0].slice(0, 100)) +
+                    "..." || undefined
+                }
+                renderers={{
+                  link: args => {
+                    const href = args.href.replace("@", "/page/");
+                    return <Link to={href}>{args.children}</Link>;
+                  }
+                }}
+              />
+            </MarkdownRenderer>
+          </PageListItem>
         </Link>
       ))}
-    </div>
+    </PageContainer>
   );
 };
