@@ -1,24 +1,25 @@
-import photon from "./libs/photon";
+import { Photon } from '@generated/photon'
+const photon = new Photon()
 
 export default async () => {
   await photon.roles.upsert({
-    where: { slug: "admin" },
-    create: { slug: "admin", locked: true },
-    update: {}
-  });
+    where: { slug: 'admin' },
+    create: { slug: 'admin', locked: true },
+    update: {},
+  })
 
   await photon.roles.upsert({
-    where: { slug: "public" },
-    create: { slug: "public", locked: true },
-    update: {}
-  });
+    where: { slug: 'public' },
+    create: { slug: 'public', locked: true },
+    update: {},
+  })
 
   await photon.users.upsert({
-    where: { email: process.env.ADMIN_EMAIL },
+    where: { email: process.env.ADMIN_EMAIL || '' },
     create: {
-      email: process.env.ADMIN_EMAIL,
-      roles: { connect: [{ slug: "admin" }] }
+      email: process.env.ADMIN_EMAIL || '',
+      roles: { connect: [{ slug: 'admin' }] },
     },
-    update: {}
-  });
-};
+    update: {},
+  })
+}

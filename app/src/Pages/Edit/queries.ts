@@ -21,7 +21,7 @@ export const SAVE_PAGE = gql`
 
 export const GET_PAGES = gql`
   query getPages {
-    listPages {
+    listPages: pages {
       id
       title
       content

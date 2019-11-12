@@ -4,7 +4,7 @@ import { setContext } from "apollo-link-context";
 import { InMemoryCache } from "apollo-cache-inmemory";
 
 const httpLink = createHttpLink({
-  uri: process.env.REACT_APP_API_URL || "http://localhost:4040"
+  uri: process.env.REACT_APP_API_URL || "http://localhost:4000"
 });
 
 const authLink = setContext((_, { headers }) => {

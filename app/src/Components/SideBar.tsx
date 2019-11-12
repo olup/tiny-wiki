@@ -51,7 +51,7 @@ const NavItem = styled(NavLink)`
 
 const GET_PAGES = gql`
   query getPagesSideBar {
-    listPages {
+    listPages: pages {
       title
       slug
     }

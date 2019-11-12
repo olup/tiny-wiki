@@ -1,11 +1,10 @@
+generator photon {
+  provider = "photonjs"
+}
+
 datasource db {
   provider = "sqlite"
   url      = "file:../db/dev.db"
-  default  = true
-}
-
-generator photon {
-  provider = "photonjs"
 }
 
 model User {
