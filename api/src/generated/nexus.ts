@@ -23,6 +23,16 @@ export interface NexusGenInputs {
     equals?: boolean | null; // Boolean
     not?: boolean | null; // Boolean
   }
+  DateTimeFilter: { // input type
+    equals?: any | null; // DateTime
+    gt?: any | null; // DateTime
+    gte?: any | null; // DateTime
+    in?: any[] | null; // [DateTime!]
+    lt?: any | null; // DateTime
+    lte?: any | null; // DateTime
+    not?: any | null; // DateTime
+    notIn?: any[] | null; // [DateTime!]
+  }
   NullableStringFilter: { // input type
     contains?: string | null; // String
     endsWith?: string | null; // String
@@ -41,12 +51,14 @@ export interface NexusGenInputs {
     canView?: NexusGenInputs['RoleCreateManyWithoutCanViewInput'] | null; // RoleCreateManyWithoutCanViewInput
     children?: NexusGenInputs['PageCreateManyWithoutChildrenInput'] | null; // PageCreateManyWithoutChildrenInput
     content?: string | null; // String
+    createdAt?: any | null; // DateTime
     draftOwner?: NexusGenInputs['UserCreateOneWithoutDraftOwnerInput'] | null; // UserCreateOneWithoutDraftOwnerInput
     id?: string | null; // ID
     parents?: NexusGenInputs['PageCreateManyWithoutParentsInput'] | null; // PageCreateManyWithoutParentsInput
     published: boolean; // Boolean!
     slug: string; // String!
     title: string; // String!
+    updatedAt?: any | null; // DateTime
   }
   PageCreateManyWithoutChildrenInput: { // input type
     connect?: NexusGenInputs['PageWhereUniqueInput'][] | null; // [PageWhereUniqueInput!]
@@ -72,56 +84,66 @@ export interface NexusGenInputs {
     canView?: NexusGenInputs['RoleCreateManyWithoutCanViewInput'] | null; // RoleCreateManyWithoutCanViewInput
     children?: NexusGenInputs['PageCreateManyWithoutChildrenInput'] | null; // PageCreateManyWithoutChildrenInput
     content?: string | null; // String
+    createdAt?: any | null; // DateTime
     draftOwner?: NexusGenInputs['UserCreateOneWithoutDraftOwnerInput'] | null; // UserCreateOneWithoutDraftOwnerInput
     id?: string | null; // ID
     parents?: NexusGenInputs['PageCreateManyWithoutParentsInput'] | null; // PageCreateManyWithoutParentsInput
     published: boolean; // Boolean!
     slug: string; // String!
     title: string; // String!
+    updatedAt?: any | null; // DateTime
   }
   PageCreateWithoutCanViewInput: { // input type
     canEdit?: NexusGenInputs['RoleCreateManyWithoutCanEditInput'] | null; // RoleCreateManyWithoutCanEditInput
     children?: NexusGenInputs['PageCreateManyWithoutChildrenInput'] | null; // PageCreateManyWithoutChildrenInput
     content?: string | null; // String
+    createdAt?: any | null; // DateTime
     draftOwner?: NexusGenInputs['UserCreateOneWithoutDraftOwnerInput'] | null; // UserCreateOneWithoutDraftOwnerInput
     id?: string | null; // ID
     parents?: NexusGenInputs['PageCreateManyWithoutParentsInput'] | null; // PageCreateManyWithoutParentsInput
     published: boolean; // Boolean!
     slug: string; // String!
     title: string; // String!
+    updatedAt?: any | null; // DateTime
   }
   PageCreateWithoutChildrenInput: { // input type
     canEdit?: NexusGenInputs['RoleCreateManyWithoutCanEditInput'] | null; // RoleCreateManyWithoutCanEditInput
     canView?: NexusGenInputs['RoleCreateManyWithoutCanViewInput'] | null; // RoleCreateManyWithoutCanViewInput
     content?: string | null; // String
+    createdAt?: any | null; // DateTime
     draftOwner?: NexusGenInputs['UserCreateOneWithoutDraftOwnerInput'] | null; // UserCreateOneWithoutDraftOwnerInput
     id?: string | null; // ID
     parents?: NexusGenInputs['PageCreateManyWithoutParentsInput'] | null; // PageCreateManyWithoutParentsInput
     published: boolean; // Boolean!
     slug: string; // String!
     title: string; // String!
+    updatedAt?: any | null; // DateTime
   }
   PageCreateWithoutDraftOwnerInput: { // input type
     canEdit?: NexusGenInputs['RoleCreateManyWithoutCanEditInput'] | null; // RoleCreateManyWithoutCanEditInput
     canView?: NexusGenInputs['RoleCreateManyWithoutCanViewInput'] | null; // RoleCreateManyWithoutCanViewInput
     children?: NexusGenInputs['PageCreateManyWithoutChildrenInput'] | null; // PageCreateManyWithoutChildrenInput
     content?: string | null; // String
+    createdAt?: any | null; // DateTime
     id?: string | null; // ID
     parents?: NexusGenInputs['PageCreateManyWithoutParentsInput'] | null; // PageCreateManyWithoutParentsInput
     published: boolean; // Boolean!
     slug: string; // String!
     title: string; // String!
+    updatedAt?: any | null; // DateTime
   }
   PageCreateWithoutParentsInput: { // input type
     canEdit?: NexusGenInputs['RoleCreateManyWithoutCanEditInput'] | null; // RoleCreateManyWithoutCanEditInput
     canView?: NexusGenInputs['RoleCreateManyWithoutCanViewInput'] | null; // RoleCreateManyWithoutCanViewInput
     children?: NexusGenInputs['PageCreateManyWithoutChildrenInput'] | null; // PageCreateManyWithoutChildrenInput
     content?: string | null; // String
+    createdAt?: any | null; // DateTime
     draftOwner?: NexusGenInputs['UserCreateOneWithoutDraftOwnerInput'] | null; // UserCreateOneWithoutDraftOwnerInput
     id?: string | null; // ID
     published: boolean; // Boolean!
     slug: string; // String!
     title: string; // String!
+    updatedAt?: any | null; // DateTime
   }
   PageFilter: { // input type
     every?: NexusGenInputs['PageWhereInput'] | null; // PageWhereInput
@@ -134,6 +156,7 @@ export interface NexusGenInputs {
     canView?: NexusGenInputs['RoleFilter'] | null; // RoleFilter
     children?: NexusGenInputs['PageFilter'] | null; // PageFilter
     content?: NexusGenInputs['NullableStringFilter'] | null; // NullableStringFilter
+    createdAt?: NexusGenInputs['DateTimeFilter'] | null; // DateTimeFilter
     id?: NexusGenInputs['StringFilter'] | null; // StringFilter
     NOT?: NexusGenInputs['PageScalarWhereInput'][] | null; // [PageScalarWhereInput!]
     OR?: NexusGenInputs['PageScalarWhereInput'][] | null; // [PageScalarWhereInput!]
@@ -141,25 +164,30 @@ export interface NexusGenInputs {
     published?: NexusGenInputs['BooleanFilter'] | null; // BooleanFilter
     slug?: NexusGenInputs['StringFilter'] | null; // StringFilter
     title?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    updatedAt?: NexusGenInputs['DateTimeFilter'] | null; // DateTimeFilter
   }
   PageUpdateInput: { // input type
     canEdit?: NexusGenInputs['RoleUpdateManyWithoutEditPagesInput'] | null; // RoleUpdateManyWithoutEditPagesInput
     canView?: NexusGenInputs['RoleUpdateManyWithoutViewPagesInput'] | null; // RoleUpdateManyWithoutViewPagesInput
     children?: NexusGenInputs['PageUpdateManyWithoutParentsInput'] | null; // PageUpdateManyWithoutParentsInput
     content?: string | null; // String
+    createdAt?: any | null; // DateTime
     draftOwner?: NexusGenInputs['UserUpdateOneWithoutDraftsInput'] | null; // UserUpdateOneWithoutDraftsInput
     id?: string | null; // ID
     parents?: NexusGenInputs['PageUpdateManyWithoutChildrenInput'] | null; // PageUpdateManyWithoutChildrenInput
     published?: boolean | null; // Boolean
     slug?: string | null; // String
     title?: string | null; // String
+    updatedAt?: any | null; // DateTime
   }
   PageUpdateManyDataInput: { // input type
     content?: string | null; // String
+    createdAt?: any | null; // DateTime
     id?: string | null; // ID
     published?: boolean | null; // Boolean
     slug?: string | null; // String
     title?: string | null; // String
+    updatedAt?: any | null; // DateTime
   }
   PageUpdateManyWithWhereNestedInput: { // input type
     data: NexusGenInputs['PageUpdateManyDataInput']; // PageUpdateManyDataInput!
@@ -244,56 +272,66 @@ export interface NexusGenInputs {
     canView?: NexusGenInputs['RoleUpdateManyWithoutViewPagesInput'] | null; // RoleUpdateManyWithoutViewPagesInput
     children?: NexusGenInputs['PageUpdateManyWithoutParentsInput'] | null; // PageUpdateManyWithoutParentsInput
     content?: string | null; // String
+    createdAt?: any | null; // DateTime
     draftOwner?: NexusGenInputs['UserUpdateOneWithoutDraftsInput'] | null; // UserUpdateOneWithoutDraftsInput
     id?: string | null; // ID
     parents?: NexusGenInputs['PageUpdateManyWithoutChildrenInput'] | null; // PageUpdateManyWithoutChildrenInput
     published?: boolean | null; // Boolean
     slug?: string | null; // String
     title?: string | null; // String
+    updatedAt?: any | null; // DateTime
   }
   PageUpdateWithoutCanViewDataInput: { // input type
     canEdit?: NexusGenInputs['RoleUpdateManyWithoutEditPagesInput'] | null; // RoleUpdateManyWithoutEditPagesInput
     children?: NexusGenInputs['PageUpdateManyWithoutParentsInput'] | null; // PageUpdateManyWithoutParentsInput
     content?: string | null; // String
+    createdAt?: any | null; // DateTime
     draftOwner?: NexusGenInputs['UserUpdateOneWithoutDraftsInput'] | null; // UserUpdateOneWithoutDraftsInput
     id?: string | null; // ID
     parents?: NexusGenInputs['PageUpdateManyWithoutChildrenInput'] | null; // PageUpdateManyWithoutChildrenInput
     published?: boolean | null; // Boolean
     slug?: string | null; // String
     title?: string | null; // String
+    updatedAt?: any | null; // DateTime
   }
   PageUpdateWithoutChildrenDataInput: { // input type
     canEdit?: NexusGenInputs['RoleUpdateManyWithoutEditPagesInput'] | null; // RoleUpdateManyWithoutEditPagesInput
     canView?: NexusGenInputs['RoleUpdateManyWithoutViewPagesInput'] | null; // RoleUpdateManyWithoutViewPagesInput
     content?: string | null; // String
+    createdAt?: any | null; // DateTime
     draftOwner?: NexusGenInputs['UserUpdateOneWithoutDraftsInput'] | null; // UserUpdateOneWithoutDraftsInput
     id?: string | null; // ID
     parents?: NexusGenInputs['PageUpdateManyWithoutChildrenInput'] | null; // PageUpdateManyWithoutChildrenInput
     published?: boolean | null; // Boolean
     slug?: string | null; // String
     title?: string | null; // String
+    updatedAt?: any | null; // DateTime
   }
   PageUpdateWithoutDraftOwnerDataInput: { // input type
     canEdit?: NexusGenInputs['RoleUpdateManyWithoutEditPagesInput'] | null; // RoleUpdateManyWithoutEditPagesInput
     canView?: NexusGenInputs['RoleUpdateManyWithoutViewPagesInput'] | null; // RoleUpdateManyWithoutViewPagesInput
     children?: NexusGenInputs['PageUpdateManyWithoutParentsInput'] | null; // PageUpdateManyWithoutParentsInput
     content?: string | null; // String
+    createdAt?: any | null; // DateTime
     id?: string | null; // ID
     parents?: NexusGenInputs['PageUpdateManyWithoutChildrenInput'] | null; // PageUpdateManyWithoutChildrenInput
     published?: boolean | null; // Boolean
     slug?: string | null; // String
     title?: string | null; // String
+    updatedAt?: any | null; // DateTime
   }
   PageUpdateWithoutParentsDataInput: { // input type
     canEdit?: NexusGenInputs['RoleUpdateManyWithoutEditPagesInput'] | null; // RoleUpdateManyWithoutEditPagesInput
     canView?: NexusGenInputs['RoleUpdateManyWithoutViewPagesInput'] | null; // RoleUpdateManyWithoutViewPagesInput
     children?: NexusGenInputs['PageUpdateManyWithoutParentsInput'] | null; // PageUpdateManyWithoutParentsInput
     content?: string | null; // String
+    createdAt?: any | null; // DateTime
     draftOwner?: NexusGenInputs['UserUpdateOneWithoutDraftsInput'] | null; // UserUpdateOneWithoutDraftsInput
     id?: string | null; // ID
     published?: boolean | null; // Boolean
     slug?: string | null; // String
     title?: string | null; // String
+    updatedAt?: any | null; // DateTime
   }
   PageUpsertWithWhereUniqueWithoutCanEditInput: { // input type
     create: NexusGenInputs['PageCreateWithoutCanEditInput']; // PageCreateWithoutCanEditInput!
@@ -326,6 +364,7 @@ export interface NexusGenInputs {
     canView?: NexusGenInputs['RoleFilter'] | null; // RoleFilter
     children?: NexusGenInputs['PageFilter'] | null; // PageFilter
     content?: NexusGenInputs['NullableStringFilter'] | null; // NullableStringFilter
+    createdAt?: NexusGenInputs['DateTimeFilter'] | null; // DateTimeFilter
     draftOwner?: NexusGenInputs['UserWhereInput'] | null; // UserWhereInput
     id?: NexusGenInputs['StringFilter'] | null; // StringFilter
     NOT?: NexusGenInputs['PageWhereInput'][] | null; // [PageWhereInput!]
@@ -334,6 +373,7 @@ export interface NexusGenInputs {
     published?: NexusGenInputs['BooleanFilter'] | null; // BooleanFilter
     slug?: NexusGenInputs['StringFilter'] | null; // StringFilter
     title?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    updatedAt?: NexusGenInputs['DateTimeFilter'] | null; // DateTimeFilter
   }
   PageWhereUniqueInput: { // input type
     id?: string | null; // ID
@@ -628,9 +668,11 @@ export interface NexusGenRootTypes {
   Mutation: {};
   Page: { // root type
     content?: string | null; // String
+    createdAt: any; // DateTime!
     id: string; // ID!
     slug: string; // String!
     title: string; // String!
+    updatedAt: any; // DateTime!
   }
   Query: {};
   Role: { // root type
@@ -646,10 +688,12 @@ export interface NexusGenRootTypes {
   Float: number;
   Boolean: boolean;
   ID: string;
+  DateTime: any;
 }
 
 export interface NexusGenAllTypes extends NexusGenRootTypes {
   BooleanFilter: NexusGenInputs['BooleanFilter'];
+  DateTimeFilter: NexusGenInputs['DateTimeFilter'];
   NullableStringFilter: NexusGenInputs['NullableStringFilter'];
   PageCreateInput: NexusGenInputs['PageCreateInput'];
   PageCreateManyWithoutChildrenInput: NexusGenInputs['PageCreateManyWithoutChildrenInput'];
@@ -751,10 +795,12 @@ export interface NexusGenFieldTypes {
     canEdit: NexusGenRootTypes['Role'][]; // [Role!]!
     canView: NexusGenRootTypes['Role'][]; // [Role!]!
     content: string | null; // String
+    createdAt: any; // DateTime!
     draftOwner: NexusGenRootTypes['User'] | null; // User
     id: string; // ID!
     slug: string; // String!
     title: string; // String!
+    updatedAt: any; // DateTime!
   }
   Query: { // field return type
     listPages: NexusGenRootTypes['Page'][]; // [Page!]!
@@ -865,13 +911,13 @@ export interface NexusGenInheritedFields {}
 
 export type NexusGenObjectNames = "Mutation" | "Page" | "Query" | "Role" | "User";
 
-export type NexusGenInputNames = "BooleanFilter" | "NullableStringFilter" | "PageCreateInput" | "PageCreateManyWithoutChildrenInput" | "PageCreateManyWithoutDraftsInput" | "PageCreateManyWithoutEditPagesInput" | "PageCreateManyWithoutParentsInput" | "PageCreateManyWithoutViewPagesInput" | "PageCreateWithoutCanEditInput" | "PageCreateWithoutCanViewInput" | "PageCreateWithoutChildrenInput" | "PageCreateWithoutDraftOwnerInput" | "PageCreateWithoutParentsInput" | "PageFilter" | "PageScalarWhereInput" | "PageUpdateInput" | "PageUpdateManyDataInput" | "PageUpdateManyWithWhereNestedInput" | "PageUpdateManyWithoutCanEditInput" | "PageUpdateManyWithoutCanViewInput" | "PageUpdateManyWithoutChildrenInput" | "PageUpdateManyWithoutDraftOwnerInput" | "PageUpdateManyWithoutParentsInput" | "PageUpdateWithWhereUniqueWithoutCanEditInput" | "PageUpdateWithWhereUniqueWithoutCanViewInput" | "PageUpdateWithWhereUniqueWithoutChildrenInput" | "PageUpdateWithWhereUniqueWithoutDraftOwnerInput" | "PageUpdateWithWhereUniqueWithoutParentsInput" | "PageUpdateWithoutCanEditDataInput" | "PageUpdateWithoutCanViewDataInput" | "PageUpdateWithoutChildrenDataInput" | "PageUpdateWithoutDraftOwnerDataInput" | "PageUpdateWithoutParentsDataInput" | "PageUpsertWithWhereUniqueWithoutCanEditInput" | "PageUpsertWithWhereUniqueWithoutCanViewInput" | "PageUpsertWithWhereUniqueWithoutChildrenInput" | "PageUpsertWithWhereUniqueWithoutDraftOwnerInput" | "PageUpsertWithWhereUniqueWithoutParentsInput" | "PageWhereInput" | "PageWhereUniqueInput" | "RoleCreateInput" | "RoleCreateManyWithoutCanEditInput" | "RoleCreateManyWithoutCanViewInput" | "RoleCreateManyWithoutRolesInput" | "RoleCreateWithoutEditPagesInput" | "RoleCreateWithoutUsersInput" | "RoleCreateWithoutViewPagesInput" | "RoleFilter" | "RoleScalarWhereInput" | "RoleUpdateManyDataInput" | "RoleUpdateManyWithWhereNestedInput" | "RoleUpdateManyWithoutEditPagesInput" | "RoleUpdateManyWithoutUsersInput" | "RoleUpdateManyWithoutViewPagesInput" | "RoleUpdateWithWhereUniqueWithoutEditPagesInput" | "RoleUpdateWithWhereUniqueWithoutUsersInput" | "RoleUpdateWithWhereUniqueWithoutViewPagesInput" | "RoleUpdateWithoutEditPagesDataInput" | "RoleUpdateWithoutUsersDataInput" | "RoleUpdateWithoutViewPagesDataInput" | "RoleUpsertWithWhereUniqueWithoutEditPagesInput" | "RoleUpsertWithWhereUniqueWithoutUsersInput" | "RoleUpsertWithWhereUniqueWithoutViewPagesInput" | "RoleWhereInput" | "RoleWhereUniqueInput" | "StringFilter" | "UserCreateInput" | "UserCreateManyWithoutUsersInput" | "UserCreateOneWithoutDraftOwnerInput" | "UserCreateWithoutDraftsInput" | "UserCreateWithoutRolesInput" | "UserFilter" | "UserScalarWhereInput" | "UserUpdateInput" | "UserUpdateManyDataInput" | "UserUpdateManyWithWhereNestedInput" | "UserUpdateManyWithoutRolesInput" | "UserUpdateOneWithoutDraftsInput" | "UserUpdateWithWhereUniqueWithoutRolesInput" | "UserUpdateWithoutDraftsDataInput" | "UserUpdateWithoutRolesDataInput" | "UserUpsertWithWhereUniqueWithoutRolesInput" | "UserUpsertWithoutDraftsInput" | "UserWhereInput" | "UserWhereUniqueInput";
+export type NexusGenInputNames = "BooleanFilter" | "DateTimeFilter" | "NullableStringFilter" | "PageCreateInput" | "PageCreateManyWithoutChildrenInput" | "PageCreateManyWithoutDraftsInput" | "PageCreateManyWithoutEditPagesInput" | "PageCreateManyWithoutParentsInput" | "PageCreateManyWithoutViewPagesInput" | "PageCreateWithoutCanEditInput" | "PageCreateWithoutCanViewInput" | "PageCreateWithoutChildrenInput" | "PageCreateWithoutDraftOwnerInput" | "PageCreateWithoutParentsInput" | "PageFilter" | "PageScalarWhereInput" | "PageUpdateInput" | "PageUpdateManyDataInput" | "PageUpdateManyWithWhereNestedInput" | "PageUpdateManyWithoutCanEditInput" | "PageUpdateManyWithoutCanViewInput" | "PageUpdateManyWithoutChildrenInput" | "PageUpdateManyWithoutDraftOwnerInput" | "PageUpdateManyWithoutParentsInput" | "PageUpdateWithWhereUniqueWithoutCanEditInput" | "PageUpdateWithWhereUniqueWithoutCanViewInput" | "PageUpdateWithWhereUniqueWithoutChildrenInput" | "PageUpdateWithWhereUniqueWithoutDraftOwnerInput" | "PageUpdateWithWhereUniqueWithoutParentsInput" | "PageUpdateWithoutCanEditDataInput" | "PageUpdateWithoutCanViewDataInput" | "PageUpdateWithoutChildrenDataInput" | "PageUpdateWithoutDraftOwnerDataInput" | "PageUpdateWithoutParentsDataInput" | "PageUpsertWithWhereUniqueWithoutCanEditInput" | "PageUpsertWithWhereUniqueWithoutCanViewInput" | "PageUpsertWithWhereUniqueWithoutChildrenInput" | "PageUpsertWithWhereUniqueWithoutDraftOwnerInput" | "PageUpsertWithWhereUniqueWithoutParentsInput" | "PageWhereInput" | "PageWhereUniqueInput" | "RoleCreateInput" | "RoleCreateManyWithoutCanEditInput" | "RoleCreateManyWithoutCanViewInput" | "RoleCreateManyWithoutRolesInput" | "RoleCreateWithoutEditPagesInput" | "RoleCreateWithoutUsersInput" | "RoleCreateWithoutViewPagesInput" | "RoleFilter" | "RoleScalarWhereInput" | "RoleUpdateManyDataInput" | "RoleUpdateManyWithWhereNestedInput" | "RoleUpdateManyWithoutEditPagesInput" | "RoleUpdateManyWithoutUsersInput" | "RoleUpdateManyWithoutViewPagesInput" | "RoleUpdateWithWhereUniqueWithoutEditPagesInput" | "RoleUpdateWithWhereUniqueWithoutUsersInput" | "RoleUpdateWithWhereUniqueWithoutViewPagesInput" | "RoleUpdateWithoutEditPagesDataInput" | "RoleUpdateWithoutUsersDataInput" | "RoleUpdateWithoutViewPagesDataInput" | "RoleUpsertWithWhereUniqueWithoutEditPagesInput" | "RoleUpsertWithWhereUniqueWithoutUsersInput" | "RoleUpsertWithWhereUniqueWithoutViewPagesInput" | "RoleWhereInput" | "RoleWhereUniqueInput" | "StringFilter" | "UserCreateInput" | "UserCreateManyWithoutUsersInput" | "UserCreateOneWithoutDraftOwnerInput" | "UserCreateWithoutDraftsInput" | "UserCreateWithoutRolesInput" | "UserFilter" | "UserScalarWhereInput" | "UserUpdateInput" | "UserUpdateManyDataInput" | "UserUpdateManyWithWhereNestedInput" | "UserUpdateManyWithoutRolesInput" | "UserUpdateOneWithoutDraftsInput" | "UserUpdateWithWhereUniqueWithoutRolesInput" | "UserUpdateWithoutDraftsDataInput" | "UserUpdateWithoutRolesDataInput" | "UserUpsertWithWhereUniqueWithoutRolesInput" | "UserUpsertWithoutDraftsInput" | "UserWhereInput" | "UserWhereUniqueInput";
 
 export type NexusGenEnumNames = never;
 
 export type NexusGenInterfaceNames = never;
 
-export type NexusGenScalarNames = "Boolean" | "Float" | "ID" | "Int" | "String";
+export type NexusGenScalarNames = "Boolean" | "DateTime" | "Float" | "ID" | "Int" | "String";
 
 export type NexusGenUnionNames = never;
 

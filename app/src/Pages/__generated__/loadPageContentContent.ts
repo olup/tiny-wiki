@@ -21,6 +21,7 @@ export interface loadPageContentContent_page {
   id: string;
   title: string;
   content: string | null;
+  updatedAt: any;
   draftOwner: loadPageContentContent_page_draftOwner | null;
   canEdit: loadPageContentContent_page_canEdit[];
 }

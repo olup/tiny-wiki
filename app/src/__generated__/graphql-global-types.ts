@@ -11,6 +11,17 @@ export interface BooleanFilter {
   not?: boolean | null;
 }
 
+export interface DateTimeFilter {
+  equals?: any | null;
+  not?: any | null;
+  in?: any[] | null;
+  notIn?: any[] | null;
+  lt?: any | null;
+  lte?: any | null;
+  gt?: any | null;
+  gte?: any | null;
+}
+
 export interface NullableStringFilter {
   equals?: string | null;
   not?: string | null;
@@ -31,6 +42,8 @@ export interface PageCreateInput {
   slug: string;
   content?: string | null;
   published: boolean;
+  createdAt?: any | null;
+  updatedAt?: any | null;
   draftOwner?: UserCreateOneWithoutDraftOwnerInput | null;
   canView?: RoleCreateManyWithoutCanViewInput | null;
   canEdit?: RoleCreateManyWithoutCanEditInput | null;
@@ -69,6 +82,8 @@ export interface PageCreateWithoutCanEditInput {
   slug: string;
   content?: string | null;
   published: boolean;
+  createdAt?: any | null;
+  updatedAt?: any | null;
   draftOwner?: UserCreateOneWithoutDraftOwnerInput | null;
   canView?: RoleCreateManyWithoutCanViewInput | null;
   parents?: PageCreateManyWithoutParentsInput | null;
@@ -81,6 +96,8 @@ export interface PageCreateWithoutCanViewInput {
   slug: string;
   content?: string | null;
   published: boolean;
+  createdAt?: any | null;
+  updatedAt?: any | null;
   draftOwner?: UserCreateOneWithoutDraftOwnerInput | null;
   canEdit?: RoleCreateManyWithoutCanEditInput | null;
   parents?: PageCreateManyWithoutParentsInput | null;
@@ -93,6 +110,8 @@ export interface PageCreateWithoutChildrenInput {
   slug: string;
   content?: string | null;
   published: boolean;
+  createdAt?: any | null;
+  updatedAt?: any | null;
   draftOwner?: UserCreateOneWithoutDraftOwnerInput | null;
   canView?: RoleCreateManyWithoutCanViewInput | null;
   canEdit?: RoleCreateManyWithoutCanEditInput | null;
@@ -105,6 +124,8 @@ export interface PageCreateWithoutDraftOwnerInput {
   slug: string;
   content?: string | null;
   published: boolean;
+  createdAt?: any | null;
+  updatedAt?: any | null;
   canView?: RoleCreateManyWithoutCanViewInput | null;
   canEdit?: RoleCreateManyWithoutCanEditInput | null;
   parents?: PageCreateManyWithoutParentsInput | null;
@@ -117,6 +138,8 @@ export interface PageCreateWithoutParentsInput {
   slug: string;
   content?: string | null;
   published: boolean;
+  createdAt?: any | null;
+  updatedAt?: any | null;
   draftOwner?: UserCreateOneWithoutDraftOwnerInput | null;
   canView?: RoleCreateManyWithoutCanViewInput | null;
   canEdit?: RoleCreateManyWithoutCanEditInput | null;
@@ -135,6 +158,8 @@ export interface PageScalarWhereInput {
   slug?: StringFilter | null;
   content?: NullableStringFilter | null;
   published?: BooleanFilter | null;
+  createdAt?: DateTimeFilter | null;
+  updatedAt?: DateTimeFilter | null;
   canView?: RoleFilter | null;
   canEdit?: RoleFilter | null;
   parents?: PageFilter | null;
@@ -150,6 +175,8 @@ export interface PageUpdateInput {
   slug?: string | null;
   content?: string | null;
   published?: boolean | null;
+  createdAt?: any | null;
+  updatedAt?: any | null;
   draftOwner?: UserUpdateOneWithoutDraftsInput | null;
   canView?: RoleUpdateManyWithoutViewPagesInput | null;
   canEdit?: RoleUpdateManyWithoutEditPagesInput | null;
@@ -163,6 +190,8 @@ export interface PageUpdateManyDataInput {
   slug?: string | null;
   content?: string | null;
   published?: boolean | null;
+  createdAt?: any | null;
+  updatedAt?: any | null;
 }
 
 export interface PageUpdateManyWithWhereNestedInput {
@@ -261,6 +290,8 @@ export interface PageUpdateWithoutCanEditDataInput {
   slug?: string | null;
   content?: string | null;
   published?: boolean | null;
+  createdAt?: any | null;
+  updatedAt?: any | null;
   draftOwner?: UserUpdateOneWithoutDraftsInput | null;
   canView?: RoleUpdateManyWithoutViewPagesInput | null;
   parents?: PageUpdateManyWithoutChildrenInput | null;
@@ -273,6 +304,8 @@ export interface PageUpdateWithoutCanViewDataInput {
   slug?: string | null;
   content?: string | null;
   published?: boolean | null;
+  createdAt?: any | null;
+  updatedAt?: any | null;
   draftOwner?: UserUpdateOneWithoutDraftsInput | null;
   canEdit?: RoleUpdateManyWithoutEditPagesInput | null;
   parents?: PageUpdateManyWithoutChildrenInput | null;
@@ -285,6 +318,8 @@ export interface PageUpdateWithoutChildrenDataInput {
   slug?: string | null;
   content?: string | null;
   published?: boolean | null;
+  createdAt?: any | null;
+  updatedAt?: any | null;
   draftOwner?: UserUpdateOneWithoutDraftsInput | null;
   canView?: RoleUpdateManyWithoutViewPagesInput | null;
   canEdit?: RoleUpdateManyWithoutEditPagesInput | null;
@@ -297,6 +332,8 @@ export interface PageUpdateWithoutDraftOwnerDataInput {
   slug?: string | null;
   content?: string | null;
   published?: boolean | null;
+  createdAt?: any | null;
+  updatedAt?: any | null;
   canView?: RoleUpdateManyWithoutViewPagesInput | null;
   canEdit?: RoleUpdateManyWithoutEditPagesInput | null;
   parents?: PageUpdateManyWithoutChildrenInput | null;
@@ -309,6 +346,8 @@ export interface PageUpdateWithoutParentsDataInput {
   slug?: string | null;
   content?: string | null;
   published?: boolean | null;
+  createdAt?: any | null;
+  updatedAt?: any | null;
   draftOwner?: UserUpdateOneWithoutDraftsInput | null;
   canView?: RoleUpdateManyWithoutViewPagesInput | null;
   canEdit?: RoleUpdateManyWithoutEditPagesInput | null;
@@ -351,6 +390,8 @@ export interface PageWhereInput {
   slug?: StringFilter | null;
   content?: NullableStringFilter | null;
   published?: BooleanFilter | null;
+  createdAt?: DateTimeFilter | null;
+  updatedAt?: DateTimeFilter | null;
   canView?: RoleFilter | null;
   canEdit?: RoleFilter | null;
   parents?: PageFilter | null;

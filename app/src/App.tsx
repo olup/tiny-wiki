@@ -19,7 +19,6 @@ const GlobalStyle = createGlobalStyle`
     font-family: 'PT Mono', monospace; 
      h1 {
       font-size : 50px;
-      margin-bottom : 20px;
     }
     h2 {
       font-size : 30px;

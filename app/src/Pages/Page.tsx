@@ -14,6 +14,7 @@ import MarkdownRenderer from "Components/MarkdownRenderer";
 import { canEditPage } from "Utils/permissions";
 import { useSimpleStore } from "Libs/simpleStore";
 import PageContainer from "Components/PageContainer";
+import dayjs from "dayjs";
 
 const StyledMd = styled(MarkdownRenderer)``;
 
@@ -23,6 +24,7 @@ const LOAD_PAGE = gql`
       id
       title
       content
+      updatedAt
       draftOwner {
         id
       }
@@ -39,6 +41,12 @@ const TopBar = styled.div`
 
 const Content = styled.div`
   line-height: 1.8;
+`;
+
+const Note = styled.div`
+  color: #ccc;
+  font-style: italic;
+  margin-top: 10px;
 `;
 
 export default () => {
@@ -82,6 +90,9 @@ export default () => {
         </TopBar>
       )}
       <Content>
+        <Note>
+          Last update {dayjs(page.updatedAt).format("DD/MM/YYYY hh:mm")}
+        </Note>
         <h1 className="title">{page.title}</h1>
         <StyledMd>
           <ReactMarkdown

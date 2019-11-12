@@ -10,5 +10,7 @@ export const Page = objectType({
     t.model.canEdit();
     t.model.canView();
     t.model.draftOwner();
+    t.model.updatedAt();
+    t.model.createdAt();
   }
 });
