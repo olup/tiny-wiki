@@ -6,6 +6,7 @@ RUN npm i -g yarn
 FROM origin as front
 WORKDIR /app
 COPY ./app/package.json .
+RUN yarn config set network-timeout 600000
 RUN yarn install
 COPY ./app/ .
 ENV REACT_APP_API_URL=/graphql
